@@ -1,4 +1,5 @@
 import Navbar from './navbar';
+import { font__default } from '../utils/fonts.js';
 import './globals.css';
 
 export const metadata = {
@@ -11,8 +12,9 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body>
 				<Navbar />
-				<div className="container">{children}</div>
+				<div  className={font__default.className + ` container`}>{children}</div>
 			</body>
 		</html>
 	);
 }
+

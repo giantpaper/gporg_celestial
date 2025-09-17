@@ -1,4 +1,6 @@
-export default Conditional = (showWhen, children) => {
-	if (showWhen)
+export default function Conditional ({showWhen, children}) {
+	if (showWhen) {
 		return <>{children}</>;
+	}
+	return <></>;
 }

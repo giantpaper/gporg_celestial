@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getCategoryHierarchy } from '../utils/categoryUtils';
+import postTitle from '../utils/postTitle.js';
 
 async function getPosts() {
 	const response = await fetch(
@@ -28,10 +29,11 @@ const Homepage = async () => {
 					const categoryId = post.categories[0];
 					const categoryPath = buildCategoryPath(categoryId);
 					const permalink = `/${categoryPath.join('/')}/${post.id}/${post.slug}`;
+					const title = postTitle(post)
 										
 					return (
 						<Link href={permalink} className="post" key={post.id}>
-							<h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
+							<h3 dangerouslySetInnerHTML={{ __html: title }}></h3>
 							<div
 								dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
 							></div>

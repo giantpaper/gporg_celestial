@@ -30,14 +30,25 @@ const Homepage = async () => {
 					const categoryPath = buildCategoryPath(categoryId);
 					const permalink = `/${categoryPath.join('/')}/${post.id}/${post.slug}`;
 					const title = postTitle(post)
-										
+					
+					// Feat. Image
+					const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
+					const featuredImageURL = featuredMedia?.source_url;
+					const featuredImageAlt = featuredMedia?.alt_text || post.title.rendered;
+					
 					return (
 						<Link href={permalink} className="post" key={post.id}>
 							<h3 dangerouslySetInnerHTML={{ __html: title }}></h3>
 							<div
 								dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
 							></div>
-							<p>URL: {permalink}</p> {/* For debugging */}
+							<div className="post-image order-0">
+								<img
+									className="aspect-square w-[500px] object-cover rounded-xl"
+									src={featuredImageURL}
+									alt={featuredImageAlt}
+								/>
+							</div>
 						</Link>
 					);
 				})}

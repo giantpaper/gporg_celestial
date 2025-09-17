@@ -22,7 +22,7 @@ const Homepage = async () => {
 	
 	return (
 		<div className="blog-page">
-			<h2>All Blog Posts</h2>
+			<h1>What's the Latest?</h1>
 			<p>All blog posts are fetched from WordPress via the WP REST API.</p>
 			<div className="posts">
 				{posts.map((post) => {

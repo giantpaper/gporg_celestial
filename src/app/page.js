@@ -39,7 +39,7 @@ const Homepage = async () => {
 					
 					return (
 						<Link href={permalink} className="post grid grid-cols-2 grid-rows-2 row-span-2 items-center justify-center" key={post.id}>
-							<h2 dangerouslySetInnerHTML={{ __html: title }} className={`order-1 text-xl ${font__accent.className}`}></h2>
+							<h2 dangerouslySetInnerHTML={{ __html: title }} className={`post-title order-1 text-xl ${font__accent.className}`}></h2>
 							<div
 								dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
 								className="order-2"

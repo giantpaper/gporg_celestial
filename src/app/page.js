@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { font__accent, font__default } from '../utils/fonts.js';
 import { getCategoryHierarchy } from '../utils/categoryUtils';
 import postTitle from '../utils/postTitle.js';
+import Conditional from '../utils/Conditional.js'
 
 async function getPosts() {
 	const response = await fetch(
@@ -25,7 +26,7 @@ const Homepage = async () => {
 		<div className="blog-page">
 			<h1>What's the Latest?</h1>
 			<p>All blog posts are fetched from WordPress via the WP REST API.</p>
-			<div className="posts">
+			<div className="posts flex gap-8 flex-col">
 				{posts.map((post) => {
 					const categoryId = post.categories[0];
 					const categoryPath = buildCategoryPath(categoryId);
@@ -38,13 +39,17 @@ const Homepage = async () => {
 					const featuredImageAlt = featuredMedia?.alt_text || post.title.rendered;
 					
 					return (
-						<Link href={permalink} className="post grid grid-cols-2 grid-rows-2 row-span-2 items-center justify-center" key={post.id}>
-							<h2 dangerouslySetInnerHTML={{ __html: title }} className={`post-title order-1 text-xl ${font__accent.className}`}></h2>
-							<div
-								dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-								className="order-2"
-							></div>
-							<div className="post-image order-0">
+						<Link href={permalink} className="post w-full grid grid-rows-2 grid-cols-[500px_auto] items-center gap-4" key={post.id}>
+							<div className="post-text order-1 flex flex-col gap-6 justify-center">
+								<h2 dangerouslySetInnerHTML={{ __html: title }} className={`post-title text-xl ${font__accent.className}`}></h2>
+								<Conditional showWhen={post.excerpt.rendered}>
+									<div
+										dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+										className="order-2"
+									></div>
+								</Conditional>
+							</div>
+							<div className="post-image order-0 w-[500px] row-span-2">
 								<img
 									className="aspect-square w-[500px] object-cover rounded-xl"
 									src={featuredImageURL}

@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body>
 				<Navbar />
-				<div  className={font__default.className + ` container`}>{children}</div>
+				<div className={font__default.className + ` container mx-auto`}>{children}</div>
 			</body>
 		</html>
 	);

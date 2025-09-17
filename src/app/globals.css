@@ -22,5 +22,19 @@ a {
 }
 
 .post-title {
-  
+  position: relative;
+  span.linklog-dq {
+    position: absolute;
+    font-size: 5em;
+    opacity: 0.125;
+    line-height: 1;
+    &:first-child {
+      top: -1rem;
+      left: -1rem;
+    }
+    &:last-child {
+      bottom: -4rem;
+      right: -1rem;
+    }
+  }
 }

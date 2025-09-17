@@ -13,7 +13,7 @@ async function getPosts() {
 const Homepage = async () => {
 //	const posts = await getPosts();
 	const [postsResponse, categoryData] = await Promise.all([
-		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed`),
+		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=10`),
 		getCategoryHierarchy()
 	]);
 	

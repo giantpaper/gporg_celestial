@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { font__accent } from '../utils/fonts.js';
 import { getCategoryHierarchy } from '../utils/categoryUtils';
 import postTitle from '../utils/postTitle.js';
 
@@ -37,10 +38,11 @@ const Homepage = async () => {
 					const featuredImageAlt = featuredMedia?.alt_text || post.title.rendered;
 					
 					return (
-						<Link href={permalink} className="post" key={post.id}>
-							<h3 dangerouslySetInnerHTML={{ __html: title }}></h3>
+						<Link href={permalink} className="post grid grid-cols-2 grid-rows-2 row-span-2 items-center justify-center" key={post.id}>
+							<h2 dangerouslySetInnerHTML={{ __html: title }} className={`order-1 text-xl ${font__accent.className}`}></h2>
 							<div
 								dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+								className="order-2"
 							></div>
 							<div className="post-image order-0">
 								<img

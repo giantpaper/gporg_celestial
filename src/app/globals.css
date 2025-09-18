@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 /* Your other CSS below */
-
---font-accent: '__Bree_Serif_1df178', '__Bree_Serif_Fallback_1df178';
+@theme {
+  --font-accent: '__Bree_Serif_1df178', '__Bree_Serif_Fallback_1df178';
+}
 
 * {
   margin: 0;

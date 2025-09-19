@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
 				<div className={`container mx-auto px-8`}>{children}</div>
 				<HeadingClassApplier />
 				
-				<footer class="p-8">
+				<footer className="p-8">
 					
 					<p></p>
 				</footer>

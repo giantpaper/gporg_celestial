@@ -1,4 +1,5 @@
 import Conditional from '../utils/Conditional.js';
+import FeaturedMedia from '../utils/FeaturedMedia.js'
 
 export default function Post(p) {
 	let post = p

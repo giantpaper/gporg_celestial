@@ -23,20 +23,30 @@ a {
   font-family: var(--font-accent);
 }
 
-.post-title {
-  position: relative;
-  span.linklog-dq {
-    position: absolute;
-    font-size: 5em;
-    opacity: 0.125;
-    line-height: 1;
-    &:first-child {
-      top: -1rem;
-      left: -1rem;
+.h1 {
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
+.post {
+  .post-title {
+    position: relative;
+    span.linklog-dq {
+      position: absolute;
+      font-size: 5em;
+      opacity: 0.125;
+      line-height: 1;
+      &:first-child {
+        top: -1rem;
+        left: -1rem;
+      }
+      &:last-child {
+        bottom: -4rem;
+        right: -1rem;
+      }
     }
-    &:last-child {
-      bottom: -4rem;
-      right: -1rem;
-    }
+  }
+  &.paper {
+    
   }
 }

@@ -4,6 +4,8 @@ import { getCategoryHierarchy } from '../utils/categoryUtils';
 import postTitle from '../utils/postTitle.js';
 import Conditional from '../utils/Conditional.js'
 
+import Post from '../components/Post.js';
+
 async function getPosts() {
 	const response = await fetch(
 		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts`

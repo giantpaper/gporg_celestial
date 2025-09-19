@@ -40,10 +40,15 @@ const Homepage = async () => {
 					const featuredImageURL = featuredMedia?.source_url;
 					const featuredImageAlt = featuredMedia?.alt_text || post.title.rendered;
 					
+					
 					return (
-						<Link href={permalink} className="post w-full grid grid-rows-2 grid-cols-[500px_auto] items-center gap-4" key={post.id}>
-							<div className="post-text order-1 flex flex-col gap-6 justify-center">
-								<h2 dangerouslySetInnerHTML={{ __html: title }} className={`post-title text-xl ${font__accent.className}`}></h2>
+						<div className="post w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 xl:gap-20" key={post.id}>
+							<div className="post-text order-1 flex flex-col gap-6 justify-center
+								w-full md:w-50 lg:w-3/5
+							">
+								<h2 className={`post-title text-xl ${font__accent.className}`}>
+									<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
+								</h2>
 								<Conditional showWhen={post.excerpt.rendered}>
 									<div
 										dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
@@ -51,14 +56,17 @@ const Homepage = async () => {
 									></div>
 								</Conditional>
 							</div>
-							<div className="post-image order-0 w-[500px] row-span-2">
+							<Conditional showWhen={featuredImageURL}>
 								<img
-									className="aspect-square w-[500px] object-cover rounded-xl"
+									className="post-image aspect-square order-0
+										w-full md:w-50 lg:w-2/5
+										shadow-[1rem_1rem_0_lightblue] md:shadow-[1.5rem_1.5rem_0_lightblue] lg:shadow-[2rem_2rem_0_lightblue]
+										object-cover rounded-xl"
 									src={featuredImageURL}
 									alt={featuredImageAlt}
 								/>
-							</div>
-						</Link>
+							</Conditional>
+						</div>
 					);
 				})}
 			</div>

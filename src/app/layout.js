@@ -1,6 +1,7 @@
 import Navbar from './navbar';
 import { font__default, font__accent, font__display } from '../utils/fonts.js';
 import './globals.css';
+import HeadingClassApplier from '../components/HeadingClassApplier'; // Import the client component
 
 export const metadata = {
 	title: 'Create Next App',
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
 			<body>
 				<Navbar />
 				<div className={`container mx-auto px-8`}>{children}</div>
+				<HeadingClassApplier />
 			</body>
 		</html>
 	);

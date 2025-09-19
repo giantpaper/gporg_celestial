@@ -3,8 +3,7 @@ import { font__accent, font__default } from '../utils/fonts.js';
 import { getCategoryHierarchy } from '../utils/categoryUtils';
 import postTitle from '../utils/postTitle.js';
 import Conditional from '../utils/Conditional.js'
-
-import Post from '../components/Post.js';
+import FeaturedMedia from '../utils/FeaturedMedia.js'
 
 async function getPosts() {
 	const response = await fetch(
@@ -36,9 +35,11 @@ const Homepage = async () => {
 					const title = postTitle(post)
 					
 					// Feat. Image
-					const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
-					const featuredImageURL = featuredMedia?.source_url;
-					const featuredImageAlt = featuredMedia?.alt_text || post.title.rendered;
+					const {
+						featuredMedia,
+						featuredImageURL,
+						featuredImageAlt
+					} = FeaturedMedia(post);
 					
 					switch (categoryPath[0]) {
 						case 'paper':	// The Paper

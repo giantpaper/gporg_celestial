@@ -28,7 +28,7 @@ const Homepage = async () => {
 		<div className="blog-page">
 			<h1>What's the Latest?</h1>
 			<p>All blog posts are fetched from WordPress via the WP REST API.</p>
-			<div className="posts flex gap-12 flex-col">
+			<div className="posts flex gap-12 lg:gap-24 flex-col">
 				{posts.map((post) => {
 					const categoryId = post.categories[0];
 					const categoryPath = buildCategoryPath(categoryId);

@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 /* Your other CSS below */
-@theme {
-  --font-accent: '__Bree_Serif_1df178', '__Bree_Serif_Fallback_1df178';
-}
 
 * {
   margin: 0;
@@ -23,7 +20,7 @@ a {
 }
 
 .h1,.h2,.h3,.h4,.h5,.h6 {
-  //font-family: var(--font-accent);
+  font-family: var(--font-accent);
 }
 
 .post-title {

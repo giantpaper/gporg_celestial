@@ -1,5 +1,5 @@
 import Navbar from './navbar';
-import { font__default } from '../utils/fonts.js';
+import { font__default, font__accent, font__display } from '../utils/fonts.js';
 import './globals.css';
 
 export const metadata = {
@@ -9,10 +9,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en">
+		<html lang="en" className={`${font__default.variable} ${font__accent.variable} ${font__display.variable}`}>
 			<body>
 				<Navbar />
-				<div className={font__default.className + ` container mx-auto px-8`}>{children}</div>
+				<div className={`container mx-auto px-8`}>{children}</div>
 			</body>
 		</html>
 	);

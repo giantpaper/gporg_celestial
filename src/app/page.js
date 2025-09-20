@@ -26,7 +26,7 @@ const Homepage = async () => {
 	return (
 		<div className="blog-page">
 			<h1>What's the Latest?</h1>
-			<div className="posts flex gap-12 lg:gap-24 flex-col">
+			<div className="posts flex gap-12 lg:gap-36 flex-col">
 				{posts.map((post) => {
 					const categoryId = post.categories[0];
 					const categoryPath = buildCategoryPath(categoryId);

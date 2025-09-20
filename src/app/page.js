@@ -91,8 +91,8 @@ const Homepage = async () => {
 							break;
 						case 'microblog':
 							return (
-								<div className={`post w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 xl:gap-20 ${categoryPath.join(' ')}`} key={post.id}>
-									<div className="post-text order-1 flex flex-col gap-6 justify-center
+								<div className={`post w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 xl:gap-20 mx-auto ${categoryPath.join(' ')}`} key={post.id}>
+									<div className="post-text order-1
 										w-full md:w-50 lg:w-3/5
 									">
 										<h2 className={`post-title text-xl inline float-left mr-1 ${font__accent.className}`}>

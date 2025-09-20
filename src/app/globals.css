@@ -49,4 +49,19 @@ a {
   &.paper {
     
   }
+  &.photoblog {
+    .post-title {
+      font-family: var(--font-fancy);
+    }
+  }
+  &.microblog {
+    font-family: var(--font-accent);
+    .post-title {
+      text-transform: uppercase;
+      &:after {
+        padding-left: 0.25rem;
+        content: '\2014';
+      }
+    }
+  }
 }

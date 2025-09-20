@@ -101,7 +101,7 @@ const Homepage = async () => {
 										<Conditional showWhen={post.excerpt.rendered}>
 											<div
 												dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-												className="order-2"
+												className="order-2 inline text-xl"
 											></div>
 										</Conditional>
 									</div>

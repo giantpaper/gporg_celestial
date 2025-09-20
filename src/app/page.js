@@ -95,7 +95,7 @@ const Homepage = async () => {
 									<div className="post-text order-1 flex flex-col gap-6 justify-center
 										w-full md:w-50 lg:w-3/5
 									">
-										<h2 className={`post-title text-xl ${font__accent.className}`}>
+										<h2 className={`post-title text-xl inline float-left mr-1 ${font__accent.className}`}>
 											<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 										</h2>
 										<Conditional showWhen={post.excerpt.rendered}>

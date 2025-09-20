@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
 		<html lang="en" className={`${font__default.variable} ${font__accent.variable} ${font__display.variable} ${font__fancy.variable}`}>
 			<body>
 				<Navbar />
-				<div className={`container mx-auto px-8`}>{children}</div>
+				<div className={`container mx-auto px-8 max-w-6xl`}>{children}</div>
 				<HeadingClassApplier />
 				
 				<footer className="p-8">

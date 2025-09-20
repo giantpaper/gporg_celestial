@@ -1,5 +1,5 @@
 import Navbar from './navbar';
-import { font__default, font__accent, font__display } from '../utils/fonts.js';
+import { font__default, font__accent, font__display, font__fancy } from '../utils/fonts.js';
 import './globals.css';
 import HeadingClassApplier from '../components/HeadingClassApplier'; // Import the client component
 
@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en" className={`${font__default.variable} ${font__accent.variable} ${font__display.variable}`}>
+		<html lang="en" className={`${font__default.variable} ${font__accent.variable} ${font__display.variable} ${font__fancy.variable}`}>
 			<body>
 				<Navbar />
 				<div className={`container mx-auto px-8`}>{children}</div>

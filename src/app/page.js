@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { font__accent, font__default } from '../utils/fonts.js';
+import { font__accent, font__default, font__fancy } from '../utils/fonts.js';
 import { getCategoryHierarchy } from '../utils/categoryUtils';
 import postTitle from '../utils/postTitle.js';
 import Conditional from '../utils/Conditional.js'

@@ -19,8 +19,36 @@ a {
   color: #000;
 }
 
+p,blockquote,ol,ul {
+  margin-bottom: 1rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+blockquote {
+  width: 90%;
+  border-left: 4px lightblue solid;
+  padding: 1.5rem 2rem;
+  background: #efefef;
+  position: relative;
+  &:before {
+    content: "\201C";
+    font: 5rem var(--font-accent);
+    position: absolute;
+    top: -0.75rem;
+    left: -0.75rem;
+    color: lightblue;
+  }
+}
+
 .h1,.h2,.h3,.h4,.h5,.h6 {
   font-family: var(--font-accent);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .h1 {
@@ -30,6 +58,8 @@ a {
 
 .post {
   .post-title {
+    margin-top: 0;
+    margin-bottom: 0;
     position: relative;
     span.linklog-dq {
       position: absolute;
@@ -51,7 +81,15 @@ a {
   }
   &.photoblog {
     .post-title {
+      --height: 1.5em;
       font-family: var(--font-fancy);
+      background: linear-gradient(to bottom,
+        transparent calc(var(--height) - 2px),
+        lightblue calc(var(--height) - 1px),
+        transparent var(--height)
+      ) repeat / 100% (calc(var(--height) + 10px));
+      line-height: 2;
+      padding: 0 1rem 1rem;
     }
   }
   &.microblog {

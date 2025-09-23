@@ -1,4 +1,8 @@
 import { getCategoryHierarchy } from '../../utils/categoryUtils';
+import postTitle from '../../utils/postTitle.js';
+import PostPhotoblogImg from '../../components/PostPhotoblogImg.js';
+import PostHeader from '../../components/PostHeader.js';
+import { font__accent, font__default, font__fancy } from '../../utils/fonts.js';
 
 export async function generateStaticParams() {
 	/*const response = await fetch(
@@ -20,14 +24,14 @@ export async function generateStaticParams() {
 		//const category = post._embedded?.['wp:term']?.[0]?.[0]?.slug || 'uncategorized';
 		
 		return {
+			categoryData,
 			slug: fullSlug // e.g., ['paper', 'information', '4904', 'hello-world']
 		};
-		//postId: post.id.toString(),
 	});
 }
 
 const page = async ({ params }) => {
-	const { slug } = params;
+	const { categoryData, slug } = params;
 	
 	// Parse the slug to determine what kind of page this is
 	// For a post, we expect: [category...path, postId, postname]
@@ -45,18 +49,40 @@ const page = async ({ params }) => {
 	
 	// Fetch the post
 	const post = await getSinglePost(postId);
-	
 	// Optional: Validate the postname matches
 	if (post.slug !== postname) {
 		return <div>Post not found</div>;
 	}
-	
-	return (
-		<div className="single-blog-page">
-			<h2 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
-			<div className="blog-post" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
-		</div>
-	);
+	switch (slug[0]) {
+		case 'paper':
+			
+			break;
+		case 'photoblog':
+			return (
+				<div className={`post single w-full flex flex-col items-center gap-4 md:gap-8 lg:gap-12 ${slug.join(' ')}`} key={post.id}>
+					<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0`} dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
+					<div className="post-content text-center" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+					<PostPhotoblogImg post={post} />
+				</div>
+			);
+			break;
+		case 'linklog':
+			return (
+				<div className="post single">	
+					<PostHeader post={post} categoryData={categoryData} />
+					<h2 className="post-title text-2xl text-center !mb-16" dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
+					<div className="post-content max-w-4xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+				</div>
+			);
+			break;
+		default:
+			return (
+				<div className="post single">
+					<h2 className="post-title" dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
+					<div className="post-content prose leading-8" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+				</div>
+			);
+	}
 };
 
 async function getSinglePost(postId) {

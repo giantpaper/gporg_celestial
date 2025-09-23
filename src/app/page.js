@@ -4,6 +4,8 @@ import { getCategoryHierarchy } from '../utils/categoryUtils';
 import postTitle from '../utils/postTitle.js';
 import Conditional from '../utils/Conditional.js'
 import FeaturedMedia from '../utils/FeaturedMedia.js'
+import PostHeader from '../components/PostHeader.js'
+import PostFooter from '../components/PostFooter.js'
 
 async function getPosts() {
 	const response = await fetch(
@@ -20,8 +22,8 @@ const Homepage = async () => {
 		getCategoryHierarchy()
 	]);
 	
-	const posts = await postsResponse.json();
 	const { buildCategoryPath } = categoryData;
+	const posts = await postsResponse.json();
 	
 	return (
 		<div className="blog-page">
@@ -40,22 +42,26 @@ const Homepage = async () => {
 						featuredImageAlt
 					} = FeaturedMedia(post);
 					
+					let classNames = post.class_list
+					
 					switch (categoryPath[0]) {
 						case 'paper':	// The Paper
 							return (
 								<div className={`post w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 xl:gap-20 ${categoryPath.join(' ')}`} key={post.id}>
-									<div className="post-text order-1 flex flex-col gap-6 justify-center
+									<div className="post-text order-1 flex flex-col justify-center
 										w-full md:w-50 lg:w-3/5
 									">
-										<h2 className={`post-title text-xl ${font__accent.className}`}>
+										<PostHeader post={post} categoryData={categoryData} />
+										<h2 className={`post-title text-2xl ${font__accent.className}`}>
 											<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 										</h2>
 										<Conditional showWhen={post.excerpt.rendered}>
 											<div
 												dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-												className="order-2"
+												className="order-2 my-8"
 											></div>
 										</Conditional>
+										<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 									</div>
 									<Conditional showWhen={featuredImageURL}>
 										<img
@@ -72,38 +78,46 @@ const Homepage = async () => {
 							break;
 						case 'photoblog':
 							return (
-								<div className={`post w-full flex flex-col items-center gap-4 md:gap-8 lg:gap-12 ${categoryPath.join(' ')}`} key={post.id}>
-									<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0`}>
+								<div className={`post w-full flex flex-col items-center ${categoryPath.join(' ')}`} key={post.id}>
+									<PostHeader post={post} categoryData={categoryData} />
+									<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0 mt-2`}>
 										<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 									</h2>
 									<Conditional showWhen={featuredImageURL}>
 										<img
 											className="post-image aspect-square order-1
 												w-full md:w-50 lg:w-3/5
+												mt-8 mb-16
 												shadow-[1rem_1rem_0_lightblue] md:shadow-[1.5rem_1.5rem_0_lightblue] lg:shadow-[2rem_2rem_0_lightblue]
 												object-cover rounded-xl"
 											src={featuredImageURL}
 											alt={featuredImageAlt}
 										/>
 									</Conditional>
+									<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 								</div>
 							);
 							break;
 						case 'microblog':
 							return (
-								<div className={`post w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 xl:gap-20 mx-auto ${categoryPath.join(' ')}`} key={post.id}>
+								<div className={`post w-full flex flex-col justify-center mx-auto ${categoryPath.join(' ')}`} key={post.id}>
+									<PostHeader post={post} categoryData={categoryData} />
 									<div className="post-text order-1
 										w-full md:w-50 lg:w-3/5
+										gap-4 mt-2
 									">
-										<h2 className={`post-title text-xl inline float-left mr-1 ${font__accent.className}`}>
-											<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
-										</h2>
-										<Conditional showWhen={post.excerpt.rendered}>
-											<div
-												dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-												className="order-2 inline text-xl"
-											></div>
+										<div className="post-title-content mb-6">
+											<h2 className={`post-title text-xl inline float-left mr-1 ${font__accent.className}`}>
+												<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
+											</h2>
+											<Conditional showWhen={post.excerpt.rendered}>
+												<div
+													dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+													className="order-2 inline text-xl"
+												></div>
 										</Conditional>
+										</div>
+										<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 									</div>
 									<Conditional showWhen={featuredImageURL}>
 										<img
@@ -120,25 +134,27 @@ const Homepage = async () => {
 							break;
 						case 'linklog':
 							const postLink = post.acf.external_url;
-							let domain = postLink.replace(/^https:\/\/([^\/]+)(?:\/.+)?$/, '$1');
+							let domain = postLink.replace(/^https:\/\/([^\/]+)(?:\/?.*)$/, '$1');
 							return (
-								<div className={`post w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 xl:gap-20 ${categoryPath.join(' ')}`} key={post.id}>
-									<div className="post-text order-1 flex flex-col gap-6 justify-center
+								<div className={`post w-full flex flex-col md:flex-row items-center gap-x-4 md:gap-x-8 lg:gap-x-12 xl:gap-x-20 ${categoryPath.join(' ')}`} key={post.id}>
+									<div className="post-text order-1 flex flex-col justify-center
 										w-full md:w-50 lg:w-3/5
 									">
-										<h2 className={`post-title text-xl ${font__accent.className}`}>
+										<PostHeader post={post} categoryData={categoryData} />
+										<h2 className={`post-title text-2xl ${font__accent.className}`}>
 											<Link href={postLink} dangerouslySetInnerHTML={{ __html: title }} target="_blank" rel="noopener"></Link>
 										</h2>
-										<p className="text-sm -mt-4 font-accent inline-flex gap-2">
+										<p className="text-sm font-accent inline-flex gap-2 mt-2 mb-0">
 											<a href={postLink} target="_blank" rel="noopener">{domain}</a>
 											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="w-4"><path d="M352 88C352 101.3 362.7 112 376 112L494.1 112L263.1 343C253.7 352.4 253.7 367.6 263.1 376.9C272.5 386.2 287.7 386.3 297 376.9L528 145.9L528 264C528 277.3 538.7 288 552 288C565.3 288 576 277.3 576 264L576 88C576 74.7 565.3 64 552 64L376 64C362.7 64 352 74.7 352 88zM144 160C99.8 160 64 195.8 64 240L64 496C64 540.2 99.8 576 144 576L400 576C444.2 576 480 540.2 480 496L480 408C480 394.7 469.3 384 456 384C442.7 384 432 394.7 432 408L432 496C432 513.7 417.7 528 400 528L144 528C126.3 528 112 513.7 112 496L112 240C112 222.3 126.3 208 144 208L232 208C245.3 208 256 197.3 256 184C256 170.7 245.3 160 232 160L144 160z"/></svg>
 										</p>
 										<Conditional showWhen={post.excerpt.rendered}>
 											<div
 												dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-												className="order-2"
+												className="order-2 my-8"
 											></div>
 										</Conditional>
+										<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 									</div>
 									<Conditional showWhen={featuredImageURL}>
 										<img

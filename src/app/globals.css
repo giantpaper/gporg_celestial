@@ -19,13 +19,6 @@ a {
   color: #000;
 }
 
-p,blockquote,ol,ul {
-  margin-bottom: 1rem;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
 blockquote {
   width: 90%;
   border-left: 4px lightblue solid;
@@ -111,5 +104,40 @@ blockquote {
         content: '\2014';
       }
     }
+  }
+}
+
+.prose {
+  p,blockquote,ol,ul,li {
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  li {
+    margin-left: 2rem;
+  }
+  ul,ol {
+    margin: 1.5rem 0;
+  }
+  ul li {
+    &:before {
+      content: '\2014';
+      width: 2rem;
+      text-align: center;
+      display: block;
+      float: left;
+      margin-left: -2rem;
+      color: purple;
+    }
+  }
+  ol {
+    
+    li {
+      
+    }
+  }
+  hr {
+    margin: 2rem 0;
   }
 }

@@ -17,8 +17,14 @@ export default function RootLayout({ children }) {
 				<HeadingClassApplier />
 				
 				<footer className="p-8">
-					
-					<p></p>
+					<div className="flex container">
+						<div className="column">
+							<h4>Explore</h4>
+						</div>
+						<div className="column">
+							<h4>Explore</h4>
+						</div>
+					</div>
 				</footer>
 			</body>
 		</html>

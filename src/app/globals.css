@@ -78,6 +78,7 @@ blockquote {
     .post-title {
       font-family: var(--font-fancy);
       line-height: 2;
+      margin-top: 0.5rem;
       padding: 0 1rem 1rem;
       position: relative;
       &:before {

@@ -5,15 +5,13 @@ import PostHeader from '../../components/PostHeader.js';
 import { font__accent, font__default, font__fancy } from '../../utils/fonts.js';
 
 export async function generateStaticParams() {
-	/*const response = await fetch(
-		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed`
-	);*/
+	// Per Lux:
+	// generateStaticParams() can only return URL parameters that match your dynamic segments
 	const [postsResponse, categoryData] = await Promise.all([
 		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=100`),
 		getCategoryHierarchy()
 	]);
 	const posts = await postsResponse.json();
-	// const posts = await response.json();
 	const { buildCategoryPath } = categoryData;
 	
 	return posts.map((post) => {
@@ -21,17 +19,18 @@ export async function generateStaticParams() {
 		const categoryId = post.categories[0];
 		const categoryPath = buildCategoryPath(categoryId);
 		const fullSlug = [...categoryPath, post.id.toString(), post.slug];
-		//const category = post._embedded?.['wp:term']?.[0]?.[0]?.slug || 'uncategorized';
 		
 		return {
-			categoryData,
 			slug: fullSlug // e.g., ['paper', 'information', '4904', 'hello-world']
 		};
 	});
 }
 
 const page = async ({ params }) => {
-	const { categoryData, slug } = params;
+	const { slug } = params;
+	
+	// Fetch categoryData in the component instead
+	const categoryData = await getCategoryHierarchy();
 	
 	// Parse the slug to determine what kind of page this is
 	// For a post, we expect: [category...path, postId, postname]

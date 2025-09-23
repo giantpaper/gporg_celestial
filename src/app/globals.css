@@ -81,15 +81,25 @@ blockquote {
   }
   &.photoblog {
     .post-title {
-      --height: 1.5em;
       font-family: var(--font-fancy);
-      background: linear-gradient(to bottom,
-        transparent calc(var(--height) - 2px),
-        lightblue calc(var(--height) - 1px),
-        transparent var(--height)
-      ) repeat / 100% (calc(var(--height) + 10px));
       line-height: 2;
       padding: 0 1rem 1rem;
+      position: relative;
+      &:before {
+        --height: 2em;
+        position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        background-color: lightblue;
+        content: '';
+        display: block;
+        mask-image: url('/assets/images/lined_bg.svg');
+        mask-size-y: var(--height);
+        mask-position-y: calc(var(--height) * -0.25);
+        z-index: -1;
+      }
     }
   }
   &.microblog {

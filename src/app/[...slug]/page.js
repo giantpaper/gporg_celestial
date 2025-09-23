@@ -56,7 +56,14 @@ const page = async ({ params }) => {
 	}
 	switch (slug[0]) {
 		case 'paper':
-			
+		return (
+			<div className="post single">	
+				<PostHeader post={post} categoryData={categoryData} />
+				<h2 className="post-title text-2xl inline-block mx-auto !mb-4" dangerouslySetInnerHTML={{ __html: title }}></h2>
+				<PostFooter post={post} categoryData={categoryData} className="mb-16" />
+				<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+			</div>
+		);
 			break;
 		case 'photoblog':
 			return (

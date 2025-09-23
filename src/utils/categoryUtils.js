@@ -24,6 +24,19 @@ export async function getCategoryHierarchy() {
 		
 		return path;
 	};
+	// NEW: Function to build display hierarchy
+	const buildCategoryDisplay = (categoryId) => {
+		const names = [];
+		let currentCat = categoryMap.get(categoryId);
+		
+		while (currentCat) {
+			names.unshift(`<a href="${currentCat.link.replace(/^https?:\/\/([^/]+)\//, '')}">${currentCat.name}</a>`); // Use .name instead of .slug
+			if (currentCat.parent === 0) break;
+			currentCat = categoryMap.get(currentCat.parent);
+		}
+		
+		return names.join(' &rsaquo; '); // Join with > separator
+	};
 	
-	return { categoryMap, buildCategoryPath };
+	return { categoryMap, buildCategoryPath, buildCategoryDisplay, };
 }

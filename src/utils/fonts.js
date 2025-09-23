@@ -2,7 +2,7 @@ import { Bree_Serif, Hind, Sassy_Frass } from 'next/font/google'
 import localFont from 'next/font/local'
  
 export const font__fancy = localFont({
-	src: '../app/assets/fonts/amalfi_coast-webfont.woff2',
+	src: '../../public/assets/fonts/amalfi_coast-webfont.woff2',
 	variable: '--font-fancy',
 })
 export const font__accent = Bree_Serif({

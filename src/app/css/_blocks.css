@@ -1,0 +1,17 @@
+::root {
+	--container-lg: calc(100% + (1/5));
+	--container-md: 100%;
+	--container-sm: calc(100% - (1/5));
+}
+
+.wp-block {
+	&-embed {
+		width: 100%;
+		iframe {
+			--container-lg: calc(100% + (1/5));
+			--container-md: 100%;
+			--container-sm: calc(100% - (1/5));
+			width: var(--container-lg);
+		}
+	}
+}

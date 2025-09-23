@@ -141,7 +141,7 @@ const Homepage = async () => {
 										w-full md:w-50 lg:w-3/5
 									">
 										<PostHeader post={post} categoryData={categoryData} />
-										<h2 className={`post-title text-2xl ${font__accent.className}`}>
+										<h2 className={`post-title text-2xl inline-block ${font__accent.className}`}>
 											<Link href={postLink} dangerouslySetInnerHTML={{ __html: title }} target="_blank" rel="noopener"></Link>
 										</h2>
 										<p className="text-sm font-accent inline-flex gap-2 mt-2 mb-8">

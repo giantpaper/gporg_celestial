@@ -1,5 +1,6 @@
 import { getCategoryHierarchy } from '../../utils/categoryUtils';
 import postTitle from '../../utils/postTitle.js';
+import PostFooter from '../../components/PostFooter.js';
 import PostPhotoblogImg from '../../components/PostPhotoblogImg.js';
 import PostHeader from '../../components/PostHeader.js';
 import { font__accent, font__default, font__fancy } from '../../utils/fonts.js';
@@ -81,6 +82,7 @@ const page = async ({ params }) => {
 					<PostHeader post={post} categoryData={categoryData} />
 					<h2 className="post-title text-2xl inline-block mx-auto !mb-16" dangerouslySetInnerHTML={{ __html: title }}></h2>
 					<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+					<PostFooter post={post} categoryData={categoryData} />
 				</div>
 			);
 			break;
@@ -89,6 +91,7 @@ const page = async ({ params }) => {
 				<div className="post single">
 					<h2 className="post-title" dangerouslySetInnerHTML={{ __html: title }}></h2>
 					<div className="post-content max-w-3xl prose leading-8" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+					<PostFooter post={post} categoryData={categoryData} />
 				</div>
 			);
 	}

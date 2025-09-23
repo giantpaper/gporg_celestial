@@ -80,7 +80,7 @@ const Homepage = async () => {
 							return (
 								<div className={`post w-full flex flex-col items-center ${categoryPath.join(' ')}`} key={post.id}>
 									<PostHeader post={post} categoryData={categoryData} />
-									<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0 mt-2`}>
+									<h2 className={`post-title text-xl w-4/5 mx-auto text-center order-0 mt-2`}>
 										<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 									</h2>
 									<Conditional showWhen={featuredImageURL}>

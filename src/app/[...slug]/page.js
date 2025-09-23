@@ -48,6 +48,8 @@ const page = async ({ params }) => {
 	
 	// Fetch the post
 	const post = await getSinglePost(postId);
+	// Fetch post-type specific title formatting
+	const title = postTitle(post);
 	// Optional: Validate the postname matches
 	if (post.slug !== postname) {
 		return <div>Post not found</div>;
@@ -59,7 +61,7 @@ const page = async ({ params }) => {
 		case 'photoblog':
 			return (
 				<div className={`post single w-full flex flex-col items-center gap-4 md:gap-8 lg:gap-12 ${slug.join(' ')}`} key={post.id}>
-					<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0`} dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
+					<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0`} dangerouslySetInnerHTML={{ __html: title }}></h2>
 					<div className="post-content text-center" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 					<PostPhotoblogImg post={post} />
 				</div>
@@ -69,7 +71,7 @@ const page = async ({ params }) => {
 			return (
 				<div className="post single">	
 					<PostHeader post={post} categoryData={categoryData} />
-					<h2 className="post-title text-2xl text-center !mb-16" dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
+					<h2 className="post-title text-2xl inline-block mx-auto !mb-16" dangerouslySetInnerHTML={{ __html: title }}></h2>
 					<div className="post-content max-w-4xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 				</div>
 			);
@@ -77,7 +79,7 @@ const page = async ({ params }) => {
 		default:
 			return (
 				<div className="post single">
-					<h2 className="post-title" dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h2>
+					<h2 className="post-title" dangerouslySetInnerHTML={{ __html: title }}></h2>
 					<div className="post-content prose leading-8" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 				</div>
 			);

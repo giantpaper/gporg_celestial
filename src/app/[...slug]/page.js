@@ -69,8 +69,9 @@ const page = async ({ params }) => {
 			return (
 				<div className={`post single w-full flex flex-col items-center gap-4 md:gap-8 lg:gap-12 ${slug.join(' ')}`} key={post.id}>
 					<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0`} dangerouslySetInnerHTML={{ __html: title }}></h2>
-					<div className="post-content text-center" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+					<div className="post-content max-w-3xl prose leading-6 text-center" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 					<PostPhotoblogImg post={post} />
+					<PostFooter post={post} categoryData={categoryData} />
 				</div>
 			);
 			break;
@@ -79,7 +80,7 @@ const page = async ({ params }) => {
 				<div className="post single">	
 					<PostHeader post={post} categoryData={categoryData} />
 					<h2 className="post-title text-2xl inline-block mx-auto !mb-16" dangerouslySetInnerHTML={{ __html: title }}></h2>
-					<div className="post-content max-w-4xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+					<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 				</div>
 			);
 			break;
@@ -87,7 +88,7 @@ const page = async ({ params }) => {
 			return (
 				<div className="post single">
 					<h2 className="post-title" dangerouslySetInnerHTML={{ __html: title }}></h2>
-					<div className="post-content prose leading-8" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+					<div className="post-content max-w-3xl prose leading-8" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 				</div>
 			);
 	}

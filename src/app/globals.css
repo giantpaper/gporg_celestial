@@ -51,6 +51,21 @@ blockquote {
   margin: 2rem 0;
 }
 
+footer {
+  padding-top: 0;
+  position: relative;
+  &:before {
+    position: absolute;
+      top: 0;
+      left: 0;
+    background: url('/assets/images/rip_footer.png') no-repeat top center / auto 100%;
+    display: block;
+    content: '';
+    width: 100%;
+    z-index: -1;
+  }
+}
+
 .post {
   .post-title {
     margin-top: 0;

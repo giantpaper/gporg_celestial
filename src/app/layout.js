@@ -2,6 +2,8 @@ import Navbar from './navbar';
 import Link from 'next/link';
 import { font__default, font__accent, font__display, font__fancy } from '../utils/fonts.js';
 import './globals.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { byPrefixAndName } from '@awesome.me/kit-82e0c091db/icons';
 import HeadingClassApplier from '../components/HeadingClassApplier'; // Import the client component
 
 export const metadata = {
@@ -14,6 +16,40 @@ export default function RootLayout({ children }) {
 		`#BlackLivesMatter`,
 		`#NoMoreKings`,
 	];
+	let currently = [
+		{
+			label: 'Watching',
+			icon: 'tv',
+			list: [
+				`Torchwood`,
+				`Doctor Who`,
+				`Wednesday`,
+				`CITY: The Animation`,
+			],
+		},
+		{
+			label: 'Reading',
+			icon: 'book-open-lines',
+			list: [
+				[`Neuromancer `, `by William Gibson`],
+			],
+		},
+		{
+			label: 'Playing',
+			icon: 'gamepad-modern',
+			list: [
+				[`Forspoken `, `PS5`],
+				[`Elden Ring `, `Steam`],
+				[`Breath of the Wild `, `Switch`],
+				[`Ingress `, `iOS`],
+				[`Control `, `Steam`],
+				[`Kena: Bridge of Spirits `, `PS5`],
+				[`LEGO Star Wars: The Skywalker Saga `, `PS5`],
+				[`Planet Crafter `, `Steam`],
+				[`Star Wars: Outlaws `, `PS5`],
+			],
+		},
+	]
 	return (
 		<html lang="en" className={`${font__default.variable} ${font__accent.variable} ${font__display.variable} ${font__fancy.variable}`}>
 			<body>
@@ -21,11 +57,11 @@ export default function RootLayout({ children }) {
 				<div className={`container mx-auto px-8 max-w-6xl`}>{children}</div>
 				<HeadingClassApplier />
 				
-				<footer className="p-8">
-					<div className="grid xl:grid-cols-12 xl:gap-8 container mx-auto">
-						<div className="column w-full col-span-3 grid md:grid-cols-2">
-							<h4 className="col-span-2">Explore</h4>
-							<ul className="text-sm">
+				<footer className="mt-12 xl:mt-16 before:h-24 pt-12">
+					<div className="grid grid-cols-6 gap-4 gap-y-6 sm:gap-12 md:gap-16 xl:grid-cols-12 xl:gap-24 p-8 container mx-auto items-start">
+						<div className="column w-full col-span-2 sm:col-span-2 grid grid-cols-1 md:gap-x-4 md:grid-cols-2">
+							<h4 className="sm:col-span-2">Explore</h4>
+							<ul className="text-sm mb-4 md:mb-0">
 								<li><Link href="/blog/">Blog</Link></li>
 								<li><Link href="/photoblog/">Photoblog</Link></li>
 								<li><Link href="/microblog/">Microblog</Link></li>
@@ -37,17 +73,20 @@ export default function RootLayout({ children }) {
 								<li><Link href="/subscribe/">Subscribe</Link></li>
 							</ul>
 						</div>
-						<div className="column w-full col-span-4">
+						<div className="column w-full col-span-4 sm:col-span-3 md:col-span-4">
 							<h4>Info</h4>
-							<p>I’m a video game nerd, webdev…ish person, guinea pig nerd. I like Star Wars, and occasionally play Ingress. I have 3 guinea pigs named Bianca, Tulip and Lilo.</p>
+							<p className="text-sm">I’m a video game nerd, webdev…ish person, guinea pig nerd. I like Star Wars, and occasionally play Ingress. I have 4 guinea pigs named Tulip, Lilo, Ziggy &amp; Raya.</p>
 						</div>
-						<div className="column w-full col-span-5">
+						<div className="column w-full col-span-6">
 							<h4>Currently</h4>
 							
-							<ul>
-								<li>Watching— Torchwood, The Acolyte, X-Men '97, Doctor Who, Good Omens, Sand Land</li>
-								<li>Reading— Twenty Twenty (by Nigel Watts), Shaka II (by Mike Resnick)</li>
-								<li>Playing— Forspoken (PS5), Elden Ring (Steam), Breath of the Wild (Switch), Ingress (iOS), Control (Steam), Kena: Bridge of Spirits (PS5), LEGO Star Wars: The Skywalker Saga (PS5), Planet Crafter (Steam)</li>
+							<ul className="text-sm flex flex-col gap-2">
+								{currently.map((block, i) => {
+									let list = block.list.map(item => typeof item === 'string' ? item : `<em>${item[0]}</em> (${item[1]})`)
+									return (
+										<li className="pl-5 clear-left" key={i}><FontAwesomeIcon className="w-4 top-1 relative -ml-5 float-left" icon={byPrefixAndName.fass[block.icon]} /><strong>{block.label}—</strong> <span dangerouslySetInnerHTML={{ __html: list.join(', ')}} ></span></li>
+									);
+								})}
 							</ul>
 
 						</div>

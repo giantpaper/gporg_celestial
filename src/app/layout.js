@@ -1,4 +1,5 @@
 import Navbar from './navbar';
+import Link from 'next/link';
 import { font__default, font__accent, font__display, font__fancy } from '../utils/fonts.js';
 import './globals.css';
 import HeadingClassApplier from '../components/HeadingClassApplier'; // Import the client component
@@ -9,6 +10,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+	let hashtags = [
+		`#BlackLivesMatter`,
+		`#NoMoreKings`,
+	];
 	return (
 		<html lang="en" className={`${font__default.variable} ${font__accent.variable} ${font__display.variable} ${font__fancy.variable}`}>
 			<body>
@@ -17,13 +22,40 @@ export default function RootLayout({ children }) {
 				<HeadingClassApplier />
 				
 				<footer className="p-8">
-					<div className="flex container">
-						<div className="column">
-							<h4>Explore</h4>
+					<div className="grid xl:grid-cols-12 xl:gap-8 container mx-auto">
+						<div className="column w-full col-span-3 grid md:grid-cols-2">
+							<h4 className="col-span-2">Explore</h4>
+							<ul className="text-sm">
+								<li><Link href="/blog/">Blog</Link></li>
+								<li><Link href="/photoblog/">Photoblog</Link></li>
+								<li><Link href="/microblog/">Microblog</Link></li>
+								<li><Link href="/linklog/">Linklog</Link></li>
+							</ul>
+							<ul className="text-sm">
+								<li><Link href="/about/">About</Link></li>
+								<li><Link href="/contact/">Contact</Link></li>
+								<li><Link href="/subscribe/">Subscribe</Link></li>
+							</ul>
 						</div>
-						<div className="column">
-							<h4>Explore</h4>
+						<div className="column w-full col-span-4">
+							<h4>Info</h4>
+							<p>I’m a video game nerd, webdev…ish person, guinea pig nerd. I like Star Wars, and occasionally play Ingress. I have 3 guinea pigs named Bianca, Tulip and Lilo.</p>
 						</div>
+						<div className="column w-full col-span-5">
+							<h4>Currently</h4>
+							
+							<ul>
+								<li>Watching— Torchwood, The Acolyte, X-Men '97, Doctor Who, Good Omens, Sand Land</li>
+								<li>Reading— Twenty Twenty (by Nigel Watts), Shaka II (by Mike Resnick)</li>
+								<li>Playing— Forspoken (PS5), Elden Ring (Steam), Breath of the Wild (Switch), Ingress (iOS), Control (Steam), Kena: Bridge of Spirits (PS5), LEGO Star Wars: The Skywalker Saga (PS5), Planet Crafter (Steam)</li>
+							</ul>
+
+						</div>
+					</div>
+					<div className="text-center h4 text-xl">
+						<ul>
+							{hashtags.forEach((ht) => <li>{ht}</li>)}
+						</ul>
 					</div>
 				</footer>
 			</body>

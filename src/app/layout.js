@@ -59,7 +59,7 @@ export default function RootLayout({ children }) {
 				
 				<footer className="mt-12 xl:mt-16 before:h-24 pt-12">
 					<div className="grid grid-cols-6 gap-4 gap-y-6 sm:gap-12 md:gap-16 xl:grid-cols-12 xl:gap-24 p-8 container mx-auto items-start">
-						<div className="column w-full col-span-2 sm:col-span-2 grid grid-cols-1 md:gap-x-4 md:grid-cols-2">
+						<div className="column w-full col-span-2 sm:col-span-3 grid grid-cols-1 md:gap-x-4 md:grid-cols-2">
 							<h4 className="sm:col-span-2">Explore</h4>
 							<ul className="text-sm mb-4 md:mb-0">
 								<li><Link href="/blog/">Blog</Link></li>
@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
 								<li><Link href="/subscribe/">Subscribe</Link></li>
 							</ul>
 						</div>
-						<div className="column w-full col-span-4 sm:col-span-3 md:col-span-4">
+						<div className="column w-full col-span-4 sm:col-span-3 md:col-span-3">
 							<h4>Info</h4>
 							<p className="text-sm">I’m a video game nerd, webdev…ish person, guinea pig nerd. I like Star Wars, and occasionally play Ingress. I have 4 guinea pigs named Tulip, Lilo, Ziggy &amp; Raya.</p>
 						</div>

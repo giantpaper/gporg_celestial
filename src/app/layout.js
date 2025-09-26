@@ -95,6 +95,7 @@ export default function RootLayout({ children }) {
 						<ul className="flex gap-4 justify-center h4 text-xl">
 							{hashtags.map((ht, i) => <li key={i}>{ht}</li>)}
 						</ul>
+						<p className="text-sm">&copy; {new Date().getFullYear()} Giantpaper.org</p>
 					</div>
 				</footer>
 			</body>

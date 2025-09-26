@@ -34,7 +34,23 @@ export async function generateStaticParams() {
 	});
 	// Generate category URLs (single segment)
 	Array.from(categoryMap.values()).forEach(category => {
-		params.push({ slug: [category.slug] });
+		const categoryPath = buildCategoryPath(category.id);
+		
+		// Add the full category path (e.g., ['paper', 'information'])
+		params.push({ slug: categoryPath });
+		
+		// Also add all parent paths (e.g., ['paper'])
+		for (let i = 1; i < categoryPath.length; i++) {
+			const parentPath = categoryPath.slice(0, i);
+			// Check if this parent path already exists to avoid duplicates
+			const pathExists = params.some(param => 
+				param.slug.length === parentPath.length && 
+				param.slug.every((seg, idx) => seg === parentPath[idx])
+			);
+			if (!pathExists) {
+				params.push({ slug: parentPath });
+			}
+		}
 	});
 	
 	return params;
@@ -49,12 +65,62 @@ const page = async ({ params }) => {
 		// Single segment: could be page or category
 		return await handleSingleSegment(slug[0], categoryData);
 	} else if (slug.length >= 4) {
-		// Multi-segment: it's a post
-		return await handlePost(slug, categoryData);
+		// Multi-segment with numeric ID: it's a post
+		const hasNumericSegment = slug.some(segment => !isNaN(segment) && segment.length > 0);
+		if (hasNumericSegment) {
+			return await handlePost(slug, categoryData);
+		} else {
+			// Multi-segment without numeric ID: it's a hierarchical category
+			return await handleCategoryArchive(slug, categoryData);
+		}
+	} else if (slug.length >= 2) {
+		// 2-3 segments: could be hierarchical category
+		return await handleCategoryArchive(slug, categoryData);
 	} else {
 		return <div>Page not found</div>;
 	}
 };
+// Handle multi-segment category URLs
+async function handleCategoryArchive(slug, categoryData) {
+	const { categoryMap } = categoryData;
+	
+	// Find category that matches this path
+	const category = Array.from(categoryMap.values()).find(cat => {
+		const catPath = buildCategoryPath(cat.id);
+		return catPath.length === slug.length && 
+					 catPath.every((segment, index) => segment === slug[index]);
+	});
+	
+	if (category) {
+		// Fetch posts in this category (including subcategories)
+		const postsResponse = await fetch(
+			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?categories=${category.id}&_embed`
+		);
+		const posts = await postsResponse.json();
+		
+		return (
+			<div className="category-archive">
+				<h1>{category.name}</h1>
+				{category.description && <p className="text-gray-600">{category.description}</p>}
+				
+				<div className="posts">
+					{posts.map(post => (
+						<article key={post.id} className="mb-8">
+							<h2>
+								<a href={`/${buildPostPermalink(post, categoryData)}`}>
+									<span dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+								</a>
+							</h2>
+							<div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></div>
+						</article>
+					))}
+				</div>
+			</div>
+		);
+	}
+	
+	return <div>Category not found</div>;
+}
 
 // Handle single-segment URLs (pages vs categories)
 async function handleSingleSegment(segment, categoryData) {

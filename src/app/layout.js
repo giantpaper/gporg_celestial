@@ -22,9 +22,10 @@ export default function RootLayout({ children }) {
 			icon: 'tv',
 			list: [
 				`Torchwood`,
-				`Doctor Who`,
 				`Wednesday`,
 				`CITY: The Animation`,
+				`For All Mankind`,
+				`Severance`,
 			],
 		},
 		{

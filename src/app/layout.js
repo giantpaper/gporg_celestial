@@ -93,7 +93,7 @@ export default function RootLayout({ children }) {
 					</div>
 					<div className="text-center h4 text-xl">
 						<ul>
-							{hashtags.forEach((ht) => <li>{ht}</li>)}
+							{hashtags.map((ht, i) => <li key={i}>{ht}</li>)}
 						</ul>
 					</div>
 				</footer>

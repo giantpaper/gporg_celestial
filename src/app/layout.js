@@ -80,11 +80,11 @@ export default function RootLayout({ children }) {
 						<div className="column w-full col-span-6">
 							<h4>Currently</h4>
 							
-							<ul className="text-sm flex flex-col gap-2">
+							<ul className="text-sm flex flex-col gap-4">
 								{currently.map((block, i) => {
 									let list = block.list.map(item => typeof item === 'string' ? item : `<em>${item[0]}</em> (${item[1]})`)
 									return (
-										<li className="pl-5 clear-left" key={i}><FontAwesomeIcon className="w-4 top-1 relative -ml-5 float-left" icon={byPrefixAndName.fass[block.icon]} /><strong>{block.label}—</strong> <span dangerouslySetInnerHTML={{ __html: list.join(', ')}} ></span></li>
+										<li className="pl-10 clear-left" key={i}><FontAwesomeIcon className="w-6 relative -ml-10 float-left" icon={byPrefixAndName.fass[block.icon]} /><strong>{block.label}—</strong> <span dangerouslySetInnerHTML={{ __html: list.join(', ')}} ></span></li>
 									);
 								})}
 							</ul>

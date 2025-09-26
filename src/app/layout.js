@@ -91,8 +91,8 @@ export default function RootLayout({ children }) {
 
 						</div>
 					</div>
-					<div className="text-center h4 text-xl">
 						<ul>
+					<div className="text-center pb-12 xl:pt-12">
 							{hashtags.map((ht, i) => <li key={i}>{ht}</li>)}
 						</ul>
 					</div>

@@ -15,6 +15,8 @@ export default function RootLayout({ children }) {
 	let hashtags = [
 		`#BlackLivesMatter`,
 		`#NoMoreKings`,
+		`#LGBTQAlly`,
+		`#AdoptDontShop`,
 	];
 	let currently = [
 		{

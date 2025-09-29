@@ -61,7 +61,7 @@ export default function RootLayout({ children }) {
 				<HeadingClassApplier />
 				
 				<footer className="mt-12 xl:mt-16 before:h-24 pt-12">
-					<div className="grid grid-cols-6 gap-4 gap-y-6 sm:gap-12 md:gap-16 xl:grid-cols-12 xl:gap-24 p-8 container mx-auto items-start">
+					<div className="grid grid-cols-6 gap-4 gap-y-6 sm:gap-12 md:gap-16 xl:gap-24 xl:grid-cols-12 p-8 container mx-auto items-start">
 						<div className="column w-full col-span-2 sm:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:gap-x-4">
 							<h4 className="sm:col-span-2">Explore</h4>
 							<ul className="text-sm mb-4 md:mb-0">

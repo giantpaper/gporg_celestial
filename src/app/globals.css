@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'css/_theme.css';
 @import 'css/_blocks.css';
 
 /* Your other CSS below */
@@ -18,7 +19,10 @@ body {
 
 a {
   text-decoration: none;
-  color: #000;
+  color: var(--color-raspberry);
+  &:visited {
+    color: var(--color-blueberry);
+  }
 }
 
 blockquote {

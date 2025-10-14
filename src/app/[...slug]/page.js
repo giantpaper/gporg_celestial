@@ -82,13 +82,13 @@ const page = async ({ params }) => {
 };
 // Handle multi-segment category URLs
 async function handleCategoryArchive(slug, categoryData) {
-	const { categoryMap } = categoryData;
+	const { categoryMap, buildCategoryPath } = categoryData; // Add buildCategoryPath here
 	
 	// Find category that matches this path
 	const category = Array.from(categoryMap.values()).find(cat => {
-		const catPath = buildCategoryPath(cat.id);
+		const catPath = buildCategoryPath(cat.id); // Now this will work
 		return catPath.length === slug.length && 
-					 catPath.every((segment, index) => segment === slug[index]);
+					catPath.every((segment, index) => segment === slug[index]);
 	});
 	
 	if (category) {

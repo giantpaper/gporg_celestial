@@ -30,7 +30,7 @@ export async function getCategoryHierarchy() {
 		let currentCat = categoryMap.get(categoryId);
 		
 		while (currentCat) {
-			names.unshift(`<a href="${currentCat.link.replace(/^https?:\/\/([^/]+)\//, '')}">${currentCat.name}</a>`); // Use .name instead of .slug
+			names.unshift(`<a href="${currentCat.link.replace(/^https?:\/\/([^/]+)\/blog/, '')}">${currentCat.name}</a>`); // Use .name instead of .slug
 			if (currentCat.parent === 0) break;
 			currentCat = categoryMap.get(currentCat.parent);
 		}

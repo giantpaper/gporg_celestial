@@ -1,4 +1,6 @@
 @theme {
-	--color-raspberry: #805;
+	--*: initial;
+	
+	--color-raspberry: #803;
 	--color-blueberry: #208;
 }

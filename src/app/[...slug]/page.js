@@ -6,6 +6,9 @@ import PostHeader from '../../components/PostHeader.js';
 import HeadingClassApplier from '../../components/HeadingClassApplier'; // Imp
 import { font__accent, font__default, font__fancy } from '../../utils/fonts.js';
 
+
+import PostsList from '../../components/PostsList.js'
+
 export async function generateStaticParams() {
 	// Per Lux:
 	// generateStaticParams() can only return URL parameters that match your dynamic segments
@@ -105,14 +108,7 @@ async function handleCategoryArchive(slug, categoryData) {
 				
 				<div className="posts">
 					{posts.map(post => (
-						<article key={post.id} className="mb-8">
-							<h2>
-								<a href={`/${buildPostPermalink(post, categoryData)}`}>
-									<span dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-								</a>
-							</h2>
-							<div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></div>
-						</article>
+						<PostsList post={post} categoryData={categoryData} />
 					))}
 				</div>
 			</div>
@@ -160,17 +156,9 @@ async function handleSingleSegment(segment, categoryData) {
 				<h1>{category.name}</h1>
 				{category.description && <p className="text-gray-600">{category.description}</p>}
 				
-				<div className="posts">
+				<div className="posts flex gap-12 lg:gap-36 flex-col">
 					{posts.map(post => (
-						<article key={post.id} className="mb-8">
-							{/* Render post preview - similar to your homepage */}
-							<h2>
-								<a href={`/${buildPostPermalink(post, categoryData)}`}>
-									<span dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-								</a>
-							</h2>
-							<div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></div>
-						</article>
+						<PostsList post={post} categoryData={categoryData} />
 					))}
 				</div>
 			</div>

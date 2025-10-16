@@ -25,7 +25,8 @@ export default function RootLayout({ children }) {
 			list: [
 				//`Torchwood`,
 				`Wednesday`,
-				`CITY: The Animation`,
+				`Doctor Who`,
+				`Stranger Things`,
 				`For All Mankind`,
 				`Severance`,
 			],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
 			icon: 'book-open-lines',
 			list: [
 				[`Neuromancer `, `by William Gibson`],
+				[`Wasteland of Flint `, `by Thomas Harlan`],
 			],
 		},
 		{

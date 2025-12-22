@@ -1,4 +1,4 @@
-import { Bree_Serif, Hind, Sassy_Frass } from 'next/font/google'
+import { Bree_Serif, Hind, Sassy_Frass, Alfa_Slab_One  } from 'next/font/google'
 import localFont from 'next/font/local'
  
 export const font__fancy = localFont({
@@ -19,4 +19,9 @@ export const font__display = Sassy_Frass({
 	subsets: ['latin'],
 	weight: '400',
 	variable: '--font-display',
+})
+export const font__display2 = Alfa_Slab_One({
+	subsets: ['latin'],
+	weight: '400',
+	variable: '--font-display2',
 })

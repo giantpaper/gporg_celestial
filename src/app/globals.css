@@ -13,10 +13,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: #fff;
-}
-
 a {
   text-decoration: none;
   color: var(--color-raspberry);
@@ -151,5 +147,14 @@ footer {
   }
   hr {
     margin: 2rem 0;
+  }
+}
+
+footer {
+  .hashtag {
+    font-family: var(--font-display2);
+    font-variant: small-caps;
+    color: #f7f7f7;
+    letter-spacing: -0.3rem;
   }
 }

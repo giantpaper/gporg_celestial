@@ -29,5 +29,3 @@ I might add more blog types/parent categories in the future as I find I have the
 | `/[category_slug]/[post_id]/[post_slug]` | Blog post URL                                                                                                 |
 | `/tag/[tag_slug]`                        | Tag URL                                                                                                       |
 | `/tag/[tag_slug]/[page_num`              | Tag URL with pagination (ex. `/tag/dreams/2`, on Page 2 of the tag **#dreams**)                               |
-
-## Blog categories

@@ -1,36 +1,33 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Blog Type
 
-First, run the development server:
+This is my ode to personal blogs from the early 2000s. People still blog in the 2020s...but through social media (via Twitter, Tiktok, Facebook, Instagram, etc). GPORG is me doing the same, but hosting it myself in a single site. It's also a nod to Tumblr (and other tumblelogs), which did the same.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Blog Categories
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The entire blog is split up into several smaller sub-blogs (represented as WP categories), so each post will only have one category.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The categories are split up as:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- The Paper: `/paper`					The Paper is a nod to normal "blog" blogs (just generic text blogs, that also featured images, videos, links, etc)
+  - [...subcategories]				Text blogs usually had categories for each post, so The Paper has dynamic number of subcategories representing that
+- Photoblog: `/photoblog`
+- Microblog: `/microlog`
+- Linklog:   `/linklog`
 
-## Learn More
+I might add more blog types/parent categories in the future as I find I have the energy for more blog post types.
 
-To learn more about Next.js, take a look at the following resources:
+## URL Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| URL Scheme                               | Description                                                                                                   |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `/`                                      | Home                                                                                                          |
+| `/[page_slug]`                           | Static page (ex. `/about`, `/contact`)                                                                        |
+| `/[category_slug]`                       | Main category page (ex. `/paper/information`)*                                                                |
+| `/[category_slug]/[page_num]`            | Main category page with pagination (ex. `/paper/information/2`, on Page 2 of the subcategory **Information**) |
+| `/[category_slug]/[post_id]/[post_slug]` | Blog post URL                                                                                                 |
+| `/tag/[tag_slug]`                        | Tag URL                                                                                                       |
+| `/tag/[tag_slug]/[page_num`              | Tag URL with pagination (ex. `/tag/dreams/2`, on Page 2 of the tag **#dreams**)                               |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Blog categories

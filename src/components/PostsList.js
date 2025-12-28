@@ -42,7 +42,7 @@ export default function PostsList({post, categoryData}) {
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>
 					<Conditional showWhen={featuredImageURL}>
-						<figure class="post-image-container
+						<figure className="post-image-container
 							w-full md:w-50 lg:w-2/5
 							">
 							<img
@@ -63,7 +63,7 @@ export default function PostsList({post, categoryData}) {
 						<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 					</h2>
 					<Conditional showWhen={featuredImageURL}>
-						<figure class="post-image-container order-1
+						<figure className="post-image-container order-1
 							w-full md:w-50 lg:w-3/5
 							">
 							<img
@@ -101,7 +101,7 @@ export default function PostsList({post, categoryData}) {
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>
 					<Conditional showWhen={featuredImageURL}>
-						<figure class="post-image-container">
+						<figure className="post-image-container">
 							<img
 								className="post-image order-0
 									w-full md:w-50 lg:w-2/5"

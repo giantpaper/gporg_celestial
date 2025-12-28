@@ -4,7 +4,7 @@ export default function postTitle(post) {
 	
 	switch (category) {
 		case 11:	// IF /linklog/
-			title = title.replace(/(&#8220;)(.+)(&#8221;)/, `<span class="linklog-dq">$1</span>$2<span class="linklog-dq">$3</span>`);
+			title = title.replace(/(&#8220;)(.+)(&#8221;)/, `<span className="linklog-dq">$1</span>$2<span className="linklog-dq">$3</span>`);
 			break;
 	}
 	

@@ -3,10 +3,7 @@ import postTitle from '../../utils/postTitle.js';
 import PostFooter from '../../components/PostFooter.js';
 import PostPhotoblogImg from '../../components/PostPhotoblogImg.js';
 import PostHeader from '../../components/PostHeader.js';
-import HeadingClassApplier from '../../components/HeadingClassApplier'; // Imp
-import { font__accent, font__default, font__fancy } from '../../utils/fonts.js';
-
-
+import HeadingClassApplier from '../../components/HeadingClassApplier';
 import PostsList from '../../components/PostsList.js'
 
 export async function generateStaticParams() {

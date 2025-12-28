@@ -60,8 +60,6 @@ export async function generateStaticParams() {
 	
 	// Generate post URLs
 	allPosts.forEach((post) => {
-		//console.log(`Generating: ${post.id} - ${post.title.rendered}`); // Debug line
-		
 		// Get the category (assuming first category)
 		const categoryId = post.categories[0];
 		const categoryPath = buildCategoryPath(categoryId);
@@ -100,9 +98,7 @@ export async function generateStaticParams() {
 const page = async ({ params }) => {
 	const { slug } = params;
 	const categoryData = await getCategoryHierarchy();
-	
-	console.log(`segment: ${segment}`)
-	
+
 	// Route based on slug length and content
 	if (slug.length === 1) {
 		// Single segment: could be page or category
@@ -177,9 +173,9 @@ async function handleSingleSegment(segment, categoryData) {
 			);
 		}
 	} catch (error) {
-		console.log('Not a page, trying category...');
+		// Not a page, will try as category below
 	}
-	
+
 	// If not a page, try as a category
 	const { categoryMap } = categoryData;
 	const category = Array.from(categoryMap.values()).find(cat => cat.slug === segment);

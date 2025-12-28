@@ -144,7 +144,7 @@ async function handleCategoryArchive(slug, categoryData) {
 				
 				<div className="posts">
 					{posts.map(post => (
-						<PostsList post={post} categoryData={categoryData} />
+						<PostsList key={post.id} post={post} categoryData={categoryData} />
 					))}
 				</div>
 			</div>
@@ -194,7 +194,7 @@ async function handleSingleSegment(segment, categoryData) {
 				
 				<div className="posts flex gap-12 lg:gap-36 flex-col">
 					{posts.map(post => (
-						<PostsList post={post} categoryData={categoryData} />
+						<PostsList key={post.id} post={post} categoryData={categoryData} />
 					))}
 				</div>
 			</div>

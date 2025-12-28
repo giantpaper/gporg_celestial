@@ -15,7 +15,7 @@ const Homepage = async () => {
 			<h1>What's the Latest?</h1>
 			<div className="posts flex gap-12 lg:gap-36 flex-col">
 				{posts.map((post) => {
-					return <PostsList post={post} categoryData={categoryData} />;
+					return <PostsList key={post.id} post={post} categoryData={categoryData} />;
 				})}
 			</div>
 		</div>

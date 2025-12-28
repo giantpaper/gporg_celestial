@@ -45,12 +45,14 @@ export async function generateStaticParams() {
 	
 	// Per Lux:
 	// generateStaticParams() can only return URL parameters that match your dynamic segments
-	const [allPosts, pagesResponse, categoryData] = await Promise.all([
+	const [allPosts, pagesResponse, categoryData, tagsResponse] = await Promise.all([
 		fetchAllPosts(),
-		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/pages?per_page=100`), // Fetch pages
-		getCategoryHierarchy()
+		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/pages?per_page=100`),
+		getCategoryHierarchy(),
+		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=100`)
 	]);
 	const pages = await pagesResponse.json();
+	const tags = await tagsResponse.json();
 	const { buildCategoryPath, categoryMap } = categoryData;
 		
 	const params = [];
@@ -88,13 +90,46 @@ export async function generateStaticParams() {
 			}
 		}
 	});
-	
+
+	// Generate tag URLs: /tag/[tag_slug] and /tag/[tag_slug]/[page_num]
+	const postsPerPage = 10;
+	tags.forEach(tag => {
+		// Page 1: /tag/[tag_slug]
+		params.push({ slug: ['tag', tag.slug] });
+
+		// Additional pages: /tag/[tag_slug]/2, /tag/[tag_slug]/3, etc.
+		const totalPages = Math.ceil(tag.count / postsPerPage);
+		for (let pageNum = 2; pageNum <= totalPages; pageNum++) {
+			params.push({ slug: ['tag', tag.slug, pageNum.toString()] });
+		}
+	});
+
+	// Generate homepage pagination URLs: /page/2, /page/3, etc.
+	// (Page 1 is handled by src/app/page.js)
+	const homepageTotalPages = Math.ceil(allPosts.length / postsPerPage);
+	for (let pageNum = 2; pageNum <= homepageTotalPages; pageNum++) {
+		params.push({ slug: ['page', pageNum.toString()] });
+	}
+
 	return params;
 }
 
 const page = async ({ params }) => {
 	const { slug } = params;
 	const categoryData = await getCategoryHierarchy();
+
+	// Check for tag routes: /tag/[tag_slug] or /tag/[tag_slug]/[page_num]
+	if (slug[0] === 'tag' && slug.length >= 2) {
+		const tagSlug = slug[1];
+		const pageNum = slug.length >= 3 ? parseInt(slug[2], 10) : 1;
+		return await handleTagArchive(tagSlug, pageNum, categoryData);
+	}
+
+	// Check for homepage pagination: /page/2, /page/3, etc.
+	if (slug[0] === 'page' && slug.length === 2 && !isNaN(slug[1])) {
+		const pageNum = parseInt(slug[1], 10);
+		return await handleHomepagePagination(pageNum, categoryData);
+	}
 
 	// Route based on slug length and content
 	if (slug.length === 1) {
@@ -149,6 +184,89 @@ async function handleCategoryArchive(slug, categoryData) {
 	}
 	
 	return <div>Category not found</div>;
+}
+
+// Handle tag archive URLs: /tag/[tag_slug] or /tag/[tag_slug]/[page_num]
+async function handleTagArchive(tagSlug, pageNum, categoryData) {
+	const perPage = 10;
+
+	// Fetch tag by slug
+	const tagResponse = await fetch(
+		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?slug=${tagSlug}`
+	);
+	const tags = await tagResponse.json();
+
+	if (!tags.length) {
+		return <div>Tag not found</div>;
+	}
+
+	const tag = tags[0];
+
+	// Fetch posts with this tag
+	const postsResponse = await fetch(
+		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?tags=${tag.id}&_embed&per_page=${perPage}&page=${pageNum}`
+	);
+	const posts = await postsResponse.json();
+	const totalPages = parseInt(postsResponse.headers.get('X-WP-TotalPages') || '1', 10);
+
+	return (
+		<div className="tag-archive">
+			<h1>#{tag.name}</h1>
+			{tag.description && <div className="text-gray-600 mb-8" dangerouslySetInnerHTML={{__html: tag.description.replace(/\n/g, "<br />") }}></div>}
+
+			<div className="posts flex gap-12 lg:gap-36 flex-col">
+				{posts.map(post => (
+					<PostsList key={post.id} post={post} categoryData={categoryData} />
+				))}
+			</div>
+
+			{totalPages > 1 && (
+				<nav className="pagination flex gap-4 justify-center mt-12">
+					{pageNum > 1 && (
+						<a href={pageNum === 2 ? `/tag/${tagSlug}` : `/tag/${tagSlug}/${pageNum - 1}`} className="prev">Previous</a>
+					)}
+					<span>Page {pageNum} of {totalPages}</span>
+					{pageNum < totalPages && (
+						<a href={`/tag/${tagSlug}/${pageNum + 1}`} className="next">Next</a>
+					)}
+				</nav>
+			)}
+		</div>
+	);
+}
+
+// Handle homepage pagination: /page/2, /page/3, etc.
+async function handleHomepagePagination(pageNum, categoryData) {
+	const perPage = 10;
+
+	const postsResponse = await fetch(
+		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=${perPage}&page=${pageNum}`
+	);
+	const posts = await postsResponse.json();
+	const totalPages = parseInt(postsResponse.headers.get('X-WP-TotalPages') || '1', 10);
+
+	return (
+		<div className="blog-page">
+			<h1>What's the Latest?</h1>
+			<div className="posts flex gap-12 lg:gap-36 flex-col">
+				{posts.map(post => (
+					<PostsList key={post.id} post={post} categoryData={categoryData} />
+				))}
+			</div>
+
+			{totalPages > 1 && (
+				<nav className="pagination flex gap-4 justify-center mt-12">
+					{pageNum > 1 && (
+						<a href={pageNum === 2 ? '/' : `/page/${pageNum - 1}`} className="prev">Previous</a>
+					)}
+					<span>Page {pageNum} of {totalPages}</span>
+					{pageNum < totalPages && (
+						<a href={`/page/${pageNum + 1}`} className="next">Next</a>
+					)}
+				</nav>
+			)}
+		</div>
+	);
 }
 
 // Handle single-segment URLs (pages vs categories)

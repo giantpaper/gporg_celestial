@@ -353,7 +353,7 @@ async function handlePost(slug, categoryData) {
 					<div className={`post single w-full flex flex-col items-center gap-4 md:gap-8 lg:gap-12 ${slug.join(' ')}`} key={post.id}>
 						<h2 className={`post-title text-xl w-3/5 mx-auto text-center order-0`} dangerouslySetInnerHTML={{ __html: title }}></h2>
 						<div className="post-content max-w-3xl prose leading-6 text-center" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
-						<PostPhotoblogImg post={post} />
+						<figure class="post-image-container"><PostPhotoblogImg post={post} /></figure>
 						<PostFooter post={post} categoryData={categoryData} />
 					</div>
 				);

@@ -42,14 +42,15 @@ export default function PostsList({post, categoryData}) {
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>
 					<Conditional showWhen={featuredImageURL}>
-						<img
-							className="post-image aspect-square order-0
-								w-full md:w-50 lg:w-2/5
-								shadow-[1rem_1rem_0_lightblue] md:shadow-[1.5rem_1.5rem_0_lightblue] lg:shadow-[2rem_2rem_0_lightblue]
-								object-cover rounded-xl"
-							src={featuredImageURL}
-							alt={featuredImageAlt}
-						/>
+						<figure class="post-image-container
+							w-full md:w-50 lg:w-2/5
+							">
+							<img
+								className="post-image order-0"
+								src={featuredImageURL}
+								alt={featuredImageAlt}
+							/>
+						</figure>
 					</Conditional>
 				</div>
 			);
@@ -62,15 +63,17 @@ export default function PostsList({post, categoryData}) {
 						<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 					</h2>
 					<Conditional showWhen={featuredImageURL}>
-						<img
-							className="post-image aspect-square order-1
-								w-full md:w-50 lg:w-3/5
-								mt-8 mb-16
-								shadow-[1rem_1rem_0_lightblue] md:shadow-[1.5rem_1.5rem_0_lightblue] lg:shadow-[2rem_2rem_0_lightblue]
-								object-cover rounded-xl"
-							src={featuredImageURL}
-							alt={featuredImageAlt}
-						/>
+						<figure class="post-image-container order-1
+							w-full md:w-50 lg:w-3/5
+							">
+							<img
+								className="post-image relative z-10
+									w-full h-full
+									object-cover rounded-[inherit]"
+								src={featuredImageURL}
+								alt={featuredImageAlt}
+							/>
+						</figure>
 					</Conditional>
 					<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 				</div>
@@ -98,14 +101,14 @@ export default function PostsList({post, categoryData}) {
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>
 					<Conditional showWhen={featuredImageURL}>
-						<img
-							className="post-image aspect-square order-0
-								w-full md:w-50 lg:w-2/5
-								shadow-[1rem_1rem_0_lightblue] md:shadow-[1.5rem_1.5rem_0_lightblue] lg:shadow-[2rem_2rem_0_lightblue]
-								object-cover rounded-xl"
-							src={featuredImageURL}
-							alt={featuredImageAlt}
-						/>
+						<figure class="post-image-container">
+							<img
+								className="post-image order-0
+									w-full md:w-50 lg:w-2/5"
+								src={featuredImageURL}
+								alt={featuredImageAlt}
+							/>
+						</figure>
 					</Conditional>
 				</div>
 			);

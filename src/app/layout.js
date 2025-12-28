@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
 						<div className="column w-full col-span-2 sm:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:gap-x-4">
 							<h4 className="sm:col-span-2">Explore</h4>
 							<ul className="text-sm mb-4 md:mb-0">
-								<li><Link href="/blog/">Blog</Link></li>
+								<li><Link href="/paper/">Blog</Link></li>
 								<li><Link href="/photoblog/">Photoblog</Link></li>
 								<li><Link href="/microblog/">Microblog</Link></li>
 								<li><Link href="/linklog/">Linklog</Link></li>

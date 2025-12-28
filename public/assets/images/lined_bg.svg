@@ -1,0 +1,36 @@
+<svg width="40" xmlns="http://www.w3.org/2000/svg" height="40" id="screenshot-4f6133f1-d7bc-80f7-8006-d86e2651adcb" viewBox="-116 -36 40 40" style="-webkit-print-color-adjust::exact" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1">
+	<g id="shape-4f6133f1-d7bc-80f7-8006-d86e2651adcb">
+		<defs>
+			<clipPath id="frame-clip-4f6133f1-d7bc-80f7-8006-d86e2651adcb-render-519" class="frame-clip frame-clip-def">
+				<rect rx="0" ry="0" x="-116" y="-36" width="40" height="40" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)">
+				</rect>
+			</clipPath>
+		</defs>
+		<g class="frame-container-wrapper">
+			<g class="frame-container-blur">
+				<g class="frame-container-shadows">
+					<g clip-path="url(#frame-clip-4f6133f1-d7bc-80f7-8006-d86e2651adcb-render-519)" fill="none">
+						<g class="fills" id="fills-4f6133f1-d7bc-80f7-8006-d86e2651adcb">
+							<rect rx="0" ry="0" x="-116" y="-36" width="40" height="40" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)" class="frame-background" style="fill:transparent;fill-opacity:1">
+							</rect>
+						</g>
+						<g class="frame-children">
+							<g id="shape-4f6133f1-d7bc-80f7-8006-d86e68c67a9e">
+								<g class="fills" id="fills-4f6133f1-d7bc-80f7-8006-d86e68c67a9e">
+									<path d="M-116,3.5L-76,3.5">
+									</path>
+								</g>
+								<g id="strokes-4f6133f1-d7bc-80f7-8006-d871fbcc9e08-4f6133f1-d7bc-80f7-8006-d86e68c67a9e" class="strokes">
+									<g class="stroke-shape">
+										<path d="M-116,3.5L-76,3.5" style="fill:none;fill-opacity:none;stroke-width:1;stroke:#000000;stroke-opacity:1">
+										</path>
+									</g>
+								</g>
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

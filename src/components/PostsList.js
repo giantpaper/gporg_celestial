@@ -100,16 +100,6 @@ export default function PostsList({post, categoryData}) {
 						</div>
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>
-					<Conditional showWhen={featuredImageURL}>
-						<figure className="post-image-container">
-							<img
-								className="post-image order-0
-									w-full md:w-50 lg:w-2/5"
-								src={featuredImageURL}
-								alt={featuredImageAlt}
-							/>
-						</figure>
-					</Conditional>
 				</div>
 			);
 			break;
@@ -138,14 +128,16 @@ export default function PostsList({post, categoryData}) {
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>
 					<Conditional showWhen={featuredImageURL}>
-						<img
-							className="post-image aspect-square order-0
-								w-full md:w-50 lg:w-2/5
-								shadow-[1rem_1rem_0_lightblue] md:shadow-[1.5rem_1.5rem_0_lightblue] lg:shadow-[2rem_2rem_0_lightblue]
-								object-cover rounded-xl"
-							src={featuredImageURL}
-							alt={featuredImageAlt}
-						/>
+						<figure className="post-image-container
+							w-full md:w-50 lg:w-3/5
+							">
+							<img
+								className="post-image aspect-square order-0
+									w-full md:w-50 lg:w-2/5"
+								src={featuredImageURL}
+								alt={featuredImageAlt}
+							/>
+						</figure>
 					</Conditional>
 				</div>
 			);

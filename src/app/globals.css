@@ -81,17 +81,16 @@ footer {
     position: relative;
     aspect-ratio: 1/1;
     height: auto;
+    &:after,
     &:before {
       content: "";
       display: block;
       position: absolute;
-      background: lightblue;
       top: 1rem;
       left: 1rem;
-      border-radius: inherit;
       width: 100%;
       height: 100%;
-      z-index: 0;
+      border-radius: inherit;
       @media (min-width: 768px) {
         top: 1.5rem;
         left: 1.5rem;
@@ -101,17 +100,29 @@ footer {
         left: 2rem;
       }
     }
+    &:before {
+      background: lightblue;
+      z-index: 0;
+    }
+    &:after {
+      z-index: 1;
+      opacity: 0.25;
+    }
     img {
       width: 100%;
       height: 100%;
       border-radius: inherit;
-      z-index: 1;
       position: relative;
       object-fit: cover;
+      z-index: 2;
     }
   }
   &.paper {
-    
+    .post-image-container {
+      &:before {
+        background: lightblue url('/assets/images/heather-green-bOrMAThd09M-unsplash.jpg') center / cover;
+      }
+    }
   }
   &.photoblog {
     .post-title {
@@ -144,6 +155,16 @@ footer {
       @media (min-width: 1024px) {
         margin-bottom: 3rem;
       }
+      &:after {
+        background: url('/assets/images/jon-tyson-P2aOvMMUJnY-unsplash.jpg') center / cover;
+      }
+    }
+  }
+  &.linklog {
+    .post-image-container {
+      &:before {
+        background: url('/assets/images/ashni-Wh9ZC4727e4-unsplash.jpg') bottom right / cover;
+      }
     }
   }
   &.microblog {
@@ -153,6 +174,19 @@ footer {
       &:after {
         padding-left: 0.25rem;
         content: '\2014';
+      }
+    }
+    .post-title-content {
+      border-radius: 1rem;
+      background: url('/assets/images/annie-spratt-BcGoZXjyPzA-unsplash.jpg') center / cover;
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .wp-block-gallery {
+      img {
+        border-radius: 1rem;
       }
     }
   }

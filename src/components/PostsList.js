@@ -91,12 +91,12 @@ export default function PostsList({post, categoryData}) {
 							<h2 className={`post-title text-xl inline float-left mr-1 ${font__accent.className}`}>
 								<Link href={permalink} dangerouslySetInnerHTML={{ __html: title }}></Link>
 							</h2>
-							<Conditional showWhen={post.excerpt.rendered}>
+							<Conditional showWhen={post.content.rendered}>
 								<div
-									dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+									dangerouslySetInnerHTML={{ __html: post.content.rendered }}
 									className="order-2 inline text-xl"
 								></div>
-						</Conditional>
+							</Conditional>
 						</div>
 						<PostFooter post={post} categoryData={categoryData} permalink={permalink} />
 					</div>

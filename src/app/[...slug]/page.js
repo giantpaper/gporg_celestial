@@ -6,6 +6,8 @@ import PostHeader from '../../components/PostHeader.js';
 import HeadingClassApplier from '../../components/HeadingClassApplier';
 import PostsList from '../../components/PostsList.js'
 
+import VideoMods from '../../utils/videoMods.js'
+
 export async function generateStaticParams() {
 	// Function to fetch all posts with pagination
 	async function fetchAllPosts() {
@@ -380,6 +382,7 @@ async function handlePost(slug, categoryData) {
 	return (
 		<>
 			<HeadingClassApplier />
+			<VideoMods />
 			{renderPostContent()}
 		</>
 	);

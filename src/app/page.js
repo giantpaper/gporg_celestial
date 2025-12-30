@@ -1,6 +1,7 @@
 import { getCategoryHierarchy } from '../utils/categoryUtils';
 
 import PostsList from '../components/PostsList.js'
+import VideoMods from '../utils/videoMods.js'
 
 const Homepage = async () => {
 	const perPage = 10;
@@ -17,9 +18,10 @@ const Homepage = async () => {
 		<div className="blog-page">
 			<h1>What's the Latest?</h1>
 			<div className="posts flex gap-12 lg:gap-36 flex-col">
-				{posts.map((post) => {
-					return <PostsList key={post.id} post={post} categoryData={categoryData} />;
-				})}
+				{posts.map((post) => (
+					<PostsList key={post.id} post={post} categoryData={categoryData} />
+				))}
+				<VideoMods />
 			</div>
 
 			{totalPages > 1 && (

@@ -170,19 +170,22 @@ async function handleCategoryArchive(slug, categoryData) {
 		const posts = await postsResponse.json();
 		
 		return (
-			<div className="category-archive">
-				<h1>{category.name}</h1>
-				{category.description && <p className="text-gray-600">{category.description}</p>}
-				
-				<div className="posts">
-					{posts.map(post => (
-						<PostsList key={post.id} post={post} categoryData={categoryData} />
-					))}
+			<>
+				<VideoMods />
+				<div className="category-archive">
+					<h1>{category.name}</h1>
+					{category.description && <p className="text-gray-600">{category.description}</p>}
+
+					<div className="posts">
+						{posts.map(post => (
+							<PostsList key={post.id} post={post} categoryData={categoryData} />
+						))}
+					</div>
 				</div>
-			</div>
+			</>
 		);
 	}
-	
+
 	return <div>Category not found</div>;
 }
 
@@ -210,28 +213,31 @@ async function handleTagArchive(tagSlug, pageNum, categoryData) {
 	const totalPages = parseInt(postsResponse.headers.get('X-WP-TotalPages') || '1', 10);
 
 	return (
-		<div className="tag-archive">
-			<h1>#{tag.name}</h1>
-			{tag.description && <div className="text-gray-600 mb-8" dangerouslySetInnerHTML={{__html: tag.description.replace(/\n/g, "<br />") }}></div>}
+		<>
+			<VideoMods />
+			<div className="tag-archive">
+				<h1>#{tag.name}</h1>
+				{tag.description && <div className="text-gray-600 mb-8" dangerouslySetInnerHTML={{__html: tag.description.replace(/\n/g, "<br />") }}></div>}
 
-			<div className="posts flex gap-12 lg:gap-36 flex-col">
-				{posts.map(post => (
-					<PostsList key={post.id} post={post} categoryData={categoryData} />
-				))}
+				<div className="posts flex gap-12 lg:gap-36 flex-col">
+					{posts.map(post => (
+						<PostsList key={post.id} post={post} categoryData={categoryData} />
+					))}
+				</div>
+
+				{totalPages > 1 && (
+					<nav className="pagination flex gap-4 justify-center mt-12">
+						{pageNum > 1 && (
+							<a href={pageNum === 2 ? `/tag/${tagSlug}` : `/tag/${tagSlug}/${pageNum - 1}`} className="prev">Previous</a>
+						)}
+						<span>Page {pageNum} of {totalPages}</span>
+						{pageNum < totalPages && (
+							<a href={`/tag/${tagSlug}/${pageNum + 1}`} className="next">Next</a>
+						)}
+					</nav>
+				)}
 			</div>
-
-			{totalPages > 1 && (
-				<nav className="pagination flex gap-4 justify-center mt-12">
-					{pageNum > 1 && (
-						<a href={pageNum === 2 ? `/tag/${tagSlug}` : `/tag/${tagSlug}/${pageNum - 1}`} className="prev">Previous</a>
-					)}
-					<span>Page {pageNum} of {totalPages}</span>
-					{pageNum < totalPages && (
-						<a href={`/tag/${tagSlug}/${pageNum + 1}`} className="next">Next</a>
-					)}
-				</nav>
-			)}
-		</div>
+		</>
 	);
 }
 
@@ -246,26 +252,29 @@ async function handleHomepagePagination(pageNum, categoryData) {
 	const totalPages = parseInt(postsResponse.headers.get('X-WP-TotalPages') || '1', 10);
 
 	return (
-		<div className="blog-page">
-			<h1>What's the Latest?</h1>
-			<div className="posts flex gap-12 lg:gap-36 flex-col">
-				{posts.map(post => (
-					<PostsList key={post.id} post={post} categoryData={categoryData} />
-				))}
-			</div>
+		<>
+			<VideoMods />
+			<div className="blog-page">
+				<h1>What's the Latest?</h1>
+				<div className="posts flex gap-12 lg:gap-36 flex-col">
+					{posts.map(post => (
+						<PostsList key={post.id} post={post} categoryData={categoryData} />
+					))}
+				</div>
 
-			{totalPages > 1 && (
-				<nav className="pagination flex gap-4 justify-center mt-12">
-					{pageNum > 1 && (
-						<a href={pageNum === 2 ? '/' : `/page/${pageNum - 1}`} className="prev">Previous</a>
-					)}
-					<span>Page {pageNum} of {totalPages}</span>
-					{pageNum < totalPages && (
-						<a href={`/page/${pageNum + 1}`} className="next">Next</a>
-					)}
-				</nav>
-			)}
-		</div>
+				{totalPages > 1 && (
+					<nav className="pagination flex gap-4 justify-center mt-12">
+						{pageNum > 1 && (
+							<a href={pageNum === 2 ? '/' : `/page/${pageNum - 1}`} className="prev">Previous</a>
+						)}
+						<span>Page {pageNum} of {totalPages}</span>
+						{pageNum < totalPages && (
+							<a href={`/page/${pageNum + 1}`} className="next">Next</a>
+						)}
+					</nav>
+				)}
+			</div>
+		</>
 	);
 }
 
@@ -281,10 +290,13 @@ async function handleSingleSegment(segment, categoryData) {
 		if (pages.length > 0) {
 			const page = pages[0];
 			return (
-				<div className="page single">
-					<h1 dangerouslySetInnerHTML={{ __html: page.title.rendered }}></h1>
-					<div className="page-content prose" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>
-				</div>
+				<>
+					<VideoMods />
+					<div className="page single">
+						<h1 dangerouslySetInnerHTML={{ __html: page.title.rendered }}></h1>
+						<div className="page-content prose" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>
+					</div>
+				</>
 			);
 		}
 	} catch (error) {
@@ -301,21 +313,24 @@ async function handleSingleSegment(segment, categoryData) {
 			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?categories=${category.id}&_embed`
 		);
 		const posts = await postsResponse.json();
-		
+
 		return (
-			<div className="category-archive">
-				<h1>{category.name}</h1>
-				{category.description && <p className="text-gray-600">{category.description}</p>}
-				
-				<div className="posts flex gap-12 lg:gap-36 flex-col">
-					{posts.map(post => (
-						<PostsList key={post.id} post={post} categoryData={categoryData} />
-					))}
+			<>
+				<VideoMods />
+				<div className="category-archive">
+					<h1>{category.name}</h1>
+					{category.description && <p className="text-gray-600">{category.description}</p>}
+
+					<div className="posts flex gap-12 lg:gap-36 flex-col">
+						{posts.map(post => (
+							<PostsList key={post.id} post={post} categoryData={categoryData} />
+						))}
+					</div>
 				</div>
-			</div>
+			</>
 		);
 	}
-	
+
 	return <div>Page not found</div>;
 }
 

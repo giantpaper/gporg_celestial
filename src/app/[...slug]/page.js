@@ -137,18 +137,16 @@ const page = async ({ params }) => {
 	if (slug.length === 1) {
 		// Single segment: could be page or category
 		return await handleSingleSegment(slug[0], categoryData);
-	} else if (slug.length >= 4) {
-		// Multi-segment with numeric ID: it's a post
+	} else if (slug.length >= 2) {
+		// Multi-segment: check for numeric ID to determine if it's a post
 		const hasNumericSegment = slug.some(segment => !isNaN(segment) && segment.length > 0);
 		if (hasNumericSegment) {
+			// Has numeric segment: it's a post (e.g., /photoblog/11043/slug or /paper/subcategory/123/slug)
 			return await handlePost(slug, categoryData);
 		} else {
-			// Multi-segment without numeric ID: it's a hierarchical category
+			// No numeric segment: it's a hierarchical category
 			return await handleCategoryArchive(slug, categoryData);
 		}
-	} else if (slug.length >= 2) {
-		// 2-3 segments: could be hierarchical category
-		return await handleCategoryArchive(slug, categoryData);
 	} else {
 		return <div>Page not found</div>;
 	}

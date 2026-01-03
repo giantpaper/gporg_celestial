@@ -94,7 +94,7 @@ export default function PostsList({post, categoryData}) {
 							<Conditional showWhen={post.content.rendered}>
 								<div
 									dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-									className="order-2 inline text-xl"
+									className="order-2 content inline text-xl"
 								></div>
 							</Conditional>
 						</div>

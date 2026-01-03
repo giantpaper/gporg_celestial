@@ -6,7 +6,9 @@ import PostHeader from '../../components/PostHeader.js';
 import HeadingClassApplier from '../../components/HeadingClassApplier';
 import PostsList from '../../components/PostsList.js'
 
-import VideoMods from '../../utils/videoMods.js'
+import Mods from '../../utils/mods.js'
+
+import MicropostMods from '../../utils/micropostMods.js'
 
 export async function generateStaticParams() {
 	// Function to fetch all posts with pagination
@@ -171,7 +173,7 @@ async function handleCategoryArchive(slug, categoryData) {
 		
 		return (
 			<>
-				<VideoMods />
+				<Mods />
 				<div className="category-archive">
 					<h1>{category.name}</h1>
 					{category.description && <p className="text-gray-600">{category.description}</p>}
@@ -214,7 +216,7 @@ async function handleTagArchive(tagSlug, pageNum, categoryData) {
 
 	return (
 		<>
-			<VideoMods />
+			<Mods />
 			<div className="tag-archive">
 				<h1>#{tag.name}</h1>
 				{tag.description && <div className="text-gray-600 mb-8" dangerouslySetInnerHTML={{__html: tag.description.replace(/\n/g, "<br />") }}></div>}
@@ -253,7 +255,7 @@ async function handleHomepagePagination(pageNum, categoryData) {
 
 	return (
 		<>
-			<VideoMods />
+			<Mods />
 			<div className="blog-page">
 				<h1>What's the Latest?</h1>
 				<div className="posts flex gap-12 lg:gap-36 flex-col">
@@ -291,7 +293,7 @@ async function handleSingleSegment(segment, categoryData) {
 			const page = pages[0];
 			return (
 				<>
-					<VideoMods />
+					<Mods />
 					<div className="page single">
 						<h1 dangerouslySetInnerHTML={{ __html: page.title.rendered }}></h1>
 						<div className="page-content prose" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>
@@ -316,7 +318,7 @@ async function handleSingleSegment(segment, categoryData) {
 
 		return (
 			<>
-				<VideoMods />
+				<Mods />
 				<div className="category-archive">
 					<h1>{category.name}</h1>
 					{category.description && <p className="text-gray-600">{category.description}</p>}
@@ -395,7 +397,7 @@ async function handlePost(slug, categoryData) {
 	return (
 		<>
 			<HeadingClassApplier />
-			<VideoMods />
+			<Mods />
 			{renderPostContent()}
 		</>
 	);

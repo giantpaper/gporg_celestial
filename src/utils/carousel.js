@@ -20,8 +20,8 @@ export default function Carousel () {
 				switch (gallery.getAttribute('data-active')) {
 					case '1':
 						gallery.querySelector('.prev').classList.add('hidden')
+					break
 				}
-				console.log(gallery.querySelector('.prev'))
 			}
 		})
 	})

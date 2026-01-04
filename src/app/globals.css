@@ -31,7 +31,7 @@ a {
 
 blockquote {
   width: 90%;
-  border-left: 4px lightblue solid;
+  border-left: 4px var(--color-blueberry) solid;
   padding: 1.5rem 2rem;
   background: #efefef;
   position: relative;

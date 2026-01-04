@@ -25,9 +25,7 @@
 
 a {
   text-decoration: none;
-  color: var(--color-raspberry);
   &:visited {
-    color: var(--color-blueberry);
   }
 }
 

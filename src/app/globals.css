@@ -7,6 +7,16 @@
 
 /* Your other CSS below */
 
+:root {
+  --container-sm: calc(100% - (1/5));
+  --container-md: 100%;
+  --container-lg: calc(100% + (1/5));
+  
+  --color-raspberry: #803;
+  --color-blueberry: #208;
+  --color-lightgray: #efefef;
+}
+
 * {
   margin: 0;
   padding: 0;

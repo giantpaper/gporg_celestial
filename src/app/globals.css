@@ -1,9 +1,9 @@
+@import 'css/_theme.css';
+@import 'css/_blocks.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'css/_theme.css';
-@import 'css/_blocks.css';
 
 /* Your other CSS below */
 

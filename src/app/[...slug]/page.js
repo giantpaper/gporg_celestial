@@ -170,9 +170,16 @@ const page = async ({ params }) => {
 async function handleTagArchive(tagSlug, categoryData) {
 	// Fetch the tag by slug
 	const tagResponse = await fetch(
-		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?slug=${tagSlug}`
+		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?slug=${encodeURIComponent(tagSlug)}`
 	);
+
+	if (!tagResponse.ok) {
+		console.error(`Failed to fetch tag "${tagSlug}":`, tagResponse.status, tagResponse.statusText);
+		return <div>Tag not found</div>;
+	}
+
 	const tags = await tagResponse.json();
+	console.log(`Tag lookup for "${tagSlug}":`, tags.length > 0 ? `Found tag ID ${tags[0].id}` : 'Not found');
 
 	if (tags.length === 0) {
 		return <div>Tag not found</div>;

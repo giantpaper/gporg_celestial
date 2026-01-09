@@ -48,12 +48,14 @@ export async function generateStaticParams() {
 	
 	// Per Lux:
 	// generateStaticParams() can only return URL parameters that match your dynamic segments
-	const [allPosts, pagesResponse, categoryData] = await Promise.all([
+	const [allPosts, pagesResponse, categoryData, tagsResponse] = await Promise.all([
 		fetchAllPosts(),
 		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/pages?per_page=100`), // Fetch pages
-		getCategoryHierarchy()
+		getCategoryHierarchy(),
+		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=100`) // Fetch tags
 	]);
 	const pages = await pagesResponse.json();
+	const tags = await tagsResponse.json();
 	const { buildCategoryPath, categoryMap } = categoryData;
 		
 	const params = [];
@@ -93,18 +95,24 @@ export async function generateStaticParams() {
 			}
 		}
 	});
-	
+
+	// Generate tag URLs
+	tags.forEach(tag => {
+		params.push({ slug: ['tag', tag.slug] });
+	});
+
 	return params;
 }
 
 const page = async ({ params }) => {
 	const { slug } = params;
 	const categoryData = await getCategoryHierarchy();
-	
-	console.log(`segment: ${segment}`)
-	
+
 	// Route based on slug length and content
-	if (slug.length === 1) {
+	if (slug[0] === 'tag' && slug.length === 2) {
+		// Tag archive: /tag/[tag_slug]
+		return await handleTagArchive(slug[1], categoryData);
+	} else if (slug.length === 1) {
 		// Single segment: could be page or category
 		return await handleSingleSegment(slug[0], categoryData);
 	} else if (slug.length >= 4) {
@@ -123,6 +131,40 @@ const page = async ({ params }) => {
 		return <div>Page not found</div>;
 	}
 };
+// Handle tag archive URLs
+async function handleTagArchive(tagSlug, categoryData) {
+	// Fetch the tag by slug
+	const tagResponse = await fetch(
+		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?slug=${tagSlug}`
+	);
+	const tags = await tagResponse.json();
+
+	if (tags.length === 0) {
+		return <div>Tag not found</div>;
+	}
+
+	const tag = tags[0];
+
+	// Fetch posts with this tag
+	const postsResponse = await fetch(
+		`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?tags=${tag.id}&_embed`
+	);
+	const posts = await postsResponse.json();
+
+	return (
+		<div className="tag-archive">
+			<h1>#{tag.name}</h1>
+			{tag.description && <p className="text-gray-600">{tag.description}</p>}
+
+			<div className="posts flex gap-12 lg:gap-36 flex-col">
+				{posts.map(post => (
+					<PostsList post={post} categoryData={categoryData} key={post.id} />
+				))}
+			</div>
+		</div>
+	);
+}
+
 // Handle multi-segment category URLs
 async function handleCategoryArchive(slug, categoryData) {
 	const { categoryMap, buildCategoryPath } = categoryData; // Add buildCategoryPath here

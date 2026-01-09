@@ -16,46 +16,81 @@ export async function generateStaticParams() {
 		let page = 1;
 		let hasMore = true;
 		let perPage = 10;
-		
+
 		while (hasMore) {
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=${perPage}&page=${page}`
 			);
-			
+
 			if (!response.ok) {
 				console.error('Failed to fetch posts:', await response.text());
 				break;
 			}
-			
+
 			const posts = await response.json();
-			
+
 			if (posts.length === 0) {
 				hasMore = false;
 			} else {
 				allPosts = allPosts.concat(posts);
 				page++;
 			}
-			
+
 			// Safety check to prevent infinite loops
 			if (page > 50) { // Adjust based on your needs (50 pages = 5000 posts max)
 				console.warn('Reached maximum page limit');
 				break;
 			}
 		}
-		
+
 		return allPosts;
 	}
-	
+
+	// Function to fetch all tags with pagination
+	async function fetchAllTags() {
+		let allTags = [];
+		let page = 1;
+		let hasMore = true;
+		let perPage = 100;
+
+		while (hasMore) {
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=${page}`
+			);
+
+			if (!response.ok) {
+				console.error('Failed to fetch tags:', await response.text());
+				break;
+			}
+
+			const tags = await response.json();
+
+			if (tags.length === 0) {
+				hasMore = false;
+			} else {
+				allTags = allTags.concat(tags);
+				page++;
+			}
+
+			// Safety check to prevent infinite loops
+			if (page > 20) { // 20 pages = 2000 tags max
+				console.warn('Reached maximum tag page limit');
+				break;
+			}
+		}
+
+		return allTags;
+	}
+
 	// Per Lux:
 	// generateStaticParams() can only return URL parameters that match your dynamic segments
-	const [allPosts, pagesResponse, categoryData, tagsResponse] = await Promise.all([
+	const [allPosts, pagesResponse, categoryData, tags] = await Promise.all([
 		fetchAllPosts(),
 		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/pages?per_page=100`), // Fetch pages
 		getCategoryHierarchy(),
-		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=100`) // Fetch tags
+		fetchAllTags() // Fetch all tags with pagination
 	]);
 	const pages = await pagesResponse.json();
-	const tags = await tagsResponse.json();
 	const { buildCategoryPath, categoryMap } = categoryData;
 		
 	const params = [];

@@ -48,22 +48,25 @@ export async function generateStaticParams() {
 
 	// Function to fetch all tags with pagination
 	async function fetchAllTags() {
+		console.log('=== FETCHING ALL TAGS ===');
 		let allTags = [];
 		let perPage = 100;
 
 		// First request to get total pages from headers
-		const firstResponse = await fetch(
-			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=1`
-		);
+		const apiUrl = `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=1`;
+		console.log('Tags API URL:', apiUrl);
+		const firstResponse = await fetch(apiUrl);
+		console.log('Tags response status:', firstResponse.status);
 
 		if (!firstResponse.ok) {
 			console.error('Failed to fetch tags:', await firstResponse.text());
 			return allTags;
 		}
 
+		// Log all headers to debug
 		const totalPages = parseInt(firstResponse.headers.get('X-WP-TotalPages') || '1', 10);
 		const totalTags = parseInt(firstResponse.headers.get('X-WP-Total') || '0', 10);
-		console.log(`Fetching tags: ${totalTags} total across ${totalPages} pages`);
+		console.log(`Tags headers - X-WP-Total: ${totalTags}, X-WP-TotalPages: ${totalPages}`);
 
 		const firstTags = await firstResponse.json();
 		allTags = allTags.concat(firstTags);

@@ -49,36 +49,41 @@ export async function generateStaticParams() {
 	// Function to fetch all tags with pagination
 	async function fetchAllTags() {
 		let allTags = [];
-		let page = 1;
-		let hasMore = true;
 		let perPage = 100;
 
-		while (hasMore) {
+		// First request to get total pages from headers
+		const firstResponse = await fetch(
+			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=1`
+		);
+
+		if (!firstResponse.ok) {
+			console.error('Failed to fetch tags:', await firstResponse.text());
+			return allTags;
+		}
+
+		const totalPages = parseInt(firstResponse.headers.get('X-WP-TotalPages') || '1', 10);
+		const totalTags = parseInt(firstResponse.headers.get('X-WP-Total') || '0', 10);
+		console.log(`Fetching tags: ${totalTags} total across ${totalPages} pages`);
+
+		const firstTags = await firstResponse.json();
+		allTags = allTags.concat(firstTags);
+
+		// Fetch remaining pages
+		for (let page = 2; page <= totalPages; page++) {
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=${page}`
 			);
 
 			if (!response.ok) {
-				console.error('Failed to fetch tags:', await response.text());
-				break;
+				console.error(`Failed to fetch tags page ${page}:`, await response.text());
+				continue; // Try next page instead of breaking
 			}
 
 			const tags = await response.json();
-
-			if (tags.length === 0) {
-				hasMore = false;
-			} else {
-				allTags = allTags.concat(tags);
-				page++;
-			}
-
-			// Safety check to prevent infinite loops
-			if (page > 20) { // 20 pages = 2000 tags max
-				console.warn('Reached maximum tag page limit');
-				break;
-			}
+			allTags = allTags.concat(tags);
 		}
 
+		console.log(`Fetched ${allTags.length} tags total`);
 		return allTags;
 	}
 

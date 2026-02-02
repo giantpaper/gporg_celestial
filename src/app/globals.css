@@ -12,6 +12,8 @@
   --container-md: 100%;
   --container-lg: calc(100% + (1/5));
   
+  --color-dust: #878472;
+  --color-grape: #643F5D;
   --color-raspberry: #803;
   --color-blueberry: #208;
   --color-lightgray: #efefef;
@@ -25,7 +27,9 @@
 
 a {
   text-decoration: none;
+  color: var(--color-dust);
   &:visited {
+    color: var(--color-grape);
   }
 }
 

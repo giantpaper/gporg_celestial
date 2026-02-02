@@ -25,7 +25,7 @@
   box-sizing: border-box;
 }
 
-a {
+.post-content p a {
   color: var(--color-dust);
   text-decoration: underline;
   &:visited {

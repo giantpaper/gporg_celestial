@@ -357,12 +357,13 @@ async function handlePost(slug, categoryData) {
 	const renderPostContent = () => {
 		switch (slug[0]) {
 			case 'paper':
+				let content = `<img src="/assets/images/sign_off.svg" class="ml-auto block h-16 mr-[5%]" alt="—giantpaper" />`
 				return (
 					<div className="post single">	
 						<PostHeader post={post} categoryData={categoryData} />
 						<h2 className="post-title text-2xl inline-block mx-auto !mb-4" dangerouslySetInnerHTML={{ __html: title }}></h2>
 						<PostFooter post={post} categoryData={categoryData} className="mb-16" />
-						<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+						<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered + content }}></div>
 					</div>
 				);
 			case 'photoblog':

@@ -189,10 +189,15 @@ footer {
         content: '\2014';
       }
     }
+    figure.featured {
+      margin: -3.5rem 0 2rem -3.5rem;
+      max-width: calc(100% + 3rem);
+    }
     .post-title-content {
       border-radius: 1rem;
       background: url('/assets/images/kiwihug-zGZYQQVmXw0-unsplash.jpg') center / cover;
       padding: 1.5rem;
+      margin: 2rem 0 0 2rem;
       iframe {
         width: 100%;
         height: 100%;

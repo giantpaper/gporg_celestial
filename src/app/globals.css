@@ -27,6 +27,7 @@
 
 .post-content p a {
   color: var(--color-dust);
+  font-weight: bold;
   text-decoration: underline;
   &:visited {
     color: var(--color-grape);

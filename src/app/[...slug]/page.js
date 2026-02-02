@@ -13,50 +13,113 @@ import MicropostMods from '../../utils/micropostMods.js'
 export async function generateStaticParams() {
 	// Function to fetch all posts with pagination
 	async function fetchAllPosts() {
-		let allPosts = [];
-		let page = 1;
-		let hasMore = true;
-		let perPage = 10;
-		
-		while (hasMore) {
-			const response = await fetch(
-				`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=${perPage}&page=${page}`
-			);
-			
-			if (!response.ok) {
-				console.error('Failed to fetch posts:', await response.text());
-				break;
-			}
-			
-			const posts = await response.json();
-			
-			if (posts.length === 0) {
-				hasMore = false;
-			} else {
-				allPosts = allPosts.concat(posts);
-				page++;
-			}
-			
-			// Safety check to prevent infinite loops
-			if (page > 50) { // Adjust based on your needs (50 pages = 5000 posts max)
-				console.warn('Reached maximum page limit');
-				break;
-			}
+		const perPage = 100; // Fetch more per page to reduce requests
+
+		// First, get the total number of pages
+		const initialResponse = await fetch(
+			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=${perPage}&page=1`
+		);
+
+		if (!initialResponse.ok) {
+			console.error('Failed to fetch posts:', await initialResponse.text());
+			return [];
 		}
-		
-		return allPosts;
+
+		const totalPages = parseInt(initialResponse.headers.get('X-WP-TotalPages') || '1', 10);
+		const firstPagePosts = await initialResponse.json();
+
+		// If only one page, return it
+		if (totalPages === 1) {
+			return firstPagePosts;
+		}
+
+		// Fetch remaining pages in parallel with error handling
+		const pagePromises = [];
+		for (let page = 2; page <= Math.min(totalPages, 50); page++) {
+			pagePromises.push(
+				fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?_embed&per_page=${perPage}&page=${page}`)
+					.then(async res => {
+						if (!res.ok) {
+							console.error(`Failed to fetch posts page ${page}`);
+							return [];
+						}
+						try {
+							return await res.json();
+						} catch (e) {
+							console.error(`Failed to parse posts page ${page}:`, e);
+							return [];
+						}
+					})
+					.catch(err => {
+						console.error(`Error fetching posts page ${page}:`, err);
+						return [];
+					})
+			);
+		}
+
+		const remainingPages = await Promise.all(pagePromises);
+		return [firstPagePosts, ...remainingPages].flat();
 	}
 	
+	// Function to fetch all tags with pagination
+	async function fetchAllTags() {
+		const perPage = 100;
+
+		// First, get the total number of pages
+		const initialResponse = await fetch(
+			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=1`
+		);
+
+		if (!initialResponse.ok) {
+			console.error('Failed to fetch tags:', await initialResponse.text());
+			return [];
+		}
+
+		const totalPages = parseInt(initialResponse.headers.get('X-WP-TotalPages') || '1', 10);
+		const firstPageTags = await initialResponse.json();
+
+		// If only one page, return it
+		if (totalPages === 1) {
+			return firstPageTags;
+		}
+
+		// Fetch remaining pages in parallel with error handling
+		const pagePromises = [];
+		for (let page = 2; page <= Math.min(totalPages, 10); page++) {
+			pagePromises.push(
+				fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=${perPage}&page=${page}`)
+					.then(async res => {
+						if (!res.ok) {
+							console.error(`Failed to fetch tags page ${page}`);
+							return [];
+						}
+						try {
+							return await res.json();
+						} catch (e) {
+							console.error(`Failed to parse tags page ${page}:`, e);
+							return [];
+						}
+					})
+					.catch(err => {
+						console.error(`Error fetching tags page ${page}:`, err);
+						return [];
+					})
+			);
+		}
+
+		const remainingPages = await Promise.all(pagePromises);
+		return [firstPageTags, ...remainingPages].flat();
+	}
+
 	// Per Lux:
 	// generateStaticParams() can only return URL parameters that match your dynamic segments
-	const [allPosts, pagesResponse, categoryData, tagsResponse] = await Promise.all([
+	const [allPosts, pagesResponse, categoryData, tags] = await Promise.all([
 		fetchAllPosts(),
 		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/pages?per_page=100`),
 		getCategoryHierarchy(),
-		fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/tags?per_page=100`)
+		fetchAllTags()
 	]);
 	const pages = await pagesResponse.json();
-	const tags = await tagsResponse.json();
 	const { buildCategoryPath, categoryMap } = categoryData;
 		
 	const params = [];
@@ -169,7 +232,19 @@ async function handleCategoryArchive(slug, categoryData) {
 		const postsResponse = await fetch(
 			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?categories=${category.id}&_embed`
 		);
-		const posts = await postsResponse.json();
+
+		if (!postsResponse.ok) {
+			console.error(`Failed to fetch posts for category ${category.id}`);
+			return <div>Error loading category</div>;
+		}
+
+		let posts;
+		try {
+			posts = await postsResponse.json();
+		} catch (e) {
+			console.error(`Failed to parse posts for category ${category.id}:`, e);
+			return <div>Error loading category</div>;
+		}
 		
 		return (
 			<>
@@ -314,7 +389,19 @@ async function handleSingleSegment(segment, categoryData) {
 		const postsResponse = await fetch(
 			`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/posts?categories=${category.id}&_embed`
 		);
-		const posts = await postsResponse.json();
+
+		if (!postsResponse.ok) {
+			console.error(`Failed to fetch posts for category ${category.id}`);
+			return <div>Error loading category</div>;
+		}
+
+		let posts;
+		try {
+			posts = await postsResponse.json();
+		} catch (e) {
+			console.error(`Failed to parse posts for category ${category.id}:`, e);
+			return <div>Error loading category</div>;
+		}
 
 		return (
 			<>
@@ -357,13 +444,12 @@ async function handlePost(slug, categoryData) {
 	const renderPostContent = () => {
 		switch (slug[0]) {
 			case 'paper':
-				let content = `<img src="/assets/images/sign_off.svg" class="ml-auto block h-16 mr-[5%]" alt="—giantpaper" />`
 				return (
 					<div className="post single">	
 						<PostHeader post={post} categoryData={categoryData} />
 						<h2 className="post-title text-2xl inline-block mx-auto !mb-4" dangerouslySetInnerHTML={{ __html: title }}></h2>
 						<PostFooter post={post} categoryData={categoryData} className="mb-16" />
-						<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered + content }}></div>
+						<div className="post-content max-w-3xl prose leading-6" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
 					</div>
 				);
 			case 'photoblog':
